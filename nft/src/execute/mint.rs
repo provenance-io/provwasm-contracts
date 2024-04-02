@@ -54,6 +54,7 @@ pub fn handle(
         signers: vec![env.contract.address.to_string(), recipient.to_string()],
         scope_uuid: token_id.to_string(),
         spec_uuid: scope_spec_uuid.to_string(),
+        usd_mills: 0,
     };
 
     let session = Session {
