@@ -1,0 +1,52 @@
+[package]
+name = "security"
+version = { workspace = true }
+repository = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+authors = ["Matthew Witkowski <mwitkowski@provenance.io"]
+
+exclude = ["security.wasm", "security-aarch64.wasm", "checksums.txt"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+panic = 'abort'
+incremental = false
+overflow-checks = true
+
+[features]
+backtraces = []
+
+[package.metadata.scripts]
+optimize = """docker run --rm -v "$(pwd)":/code \
+  --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+  --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+  cosmwasm/rust-optimizer:0.15.0
+"""
+optimize-arm = """docker run --rm -v "$(pwd)":/code \
+  --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+  --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+  cosmwasm/rust-optimizer-arm64:0.15.0
+"""
+
+[dependencies]
+provwasm-std = { workspace = true }
+cosmwasm-schema = { workspace = true }
+cosmwasm-std = { workspace = true, features = ["cosmwasm_1_1"] }
+cw-storage-plus = { workspace = true, features = ["iterator"] }
+cw2 = { workspace = true }
+schemars = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
+semver = { workspace = true }
+
+[dev-dependencies]
+provwasm-mocks = { workspace = true }
