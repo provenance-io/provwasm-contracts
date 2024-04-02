@@ -72,6 +72,8 @@ fn is_scope(deps: &DepsMut, asset_addr: &Addr) -> Result<bool, ContractError> {
         "".to_string(),
         false,
         false,
+        false,
+        false,
     );
     Ok(response.is_ok_and(|res| res.scope.is_some()))
 }
