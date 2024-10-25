@@ -1,9 +1,10 @@
 use cosmwasm_schema::{cw_serde, QueryResponses};
-use cosmwasm_std::{Addr, Binary};
+use cosmwasm_std::{to_json_binary, Addr, Binary, CosmosMsg, StdResult, WasmMsg};
 use cw2::ContractVersion;
 use cw_ownable::{cw_ownable_execute, cw_ownable_query};
 use cw_utils::Expiration;
 use provwasm_std::types::provenance::metadata::v1::ScopeResponse;
+use schemars::JsonSchema;
 
 #[cw_serde]
 pub enum InstantiateMsg {
@@ -231,4 +232,38 @@ pub struct ContractInfoResponse {
 #[cw_serde]
 pub struct ContractVersionResponse {
     pub contract_version: ContractVersion,
+}
+
+#[cw_serde]
+pub struct Cw721ReceiveMsg {
+    pub sender: String,
+    pub token_id: String,
+    pub msg: Binary,
+}
+
+impl Cw721ReceiveMsg {
+    /// serializes the message
+    pub fn into_binary(self) -> StdResult<Binary> {
+        let msg = ReceiverExecuteMsg::ReceiveNft(self);
+        to_json_binary(&msg)
+    }
+
+    /// creates a cosmos_msg sending this struct to the named contract
+    pub fn into_cosmos_msg<T: Into<String>, C>(self, contract_addr: T) -> StdResult<CosmosMsg<C>>
+    where
+        C: Clone + std::fmt::Debug + PartialEq + JsonSchema,
+    {
+        let msg = self.into_binary()?;
+        let execute = WasmMsg::Execute {
+            contract_addr: contract_addr.into(),
+            msg,
+            funds: vec![],
+        };
+        Ok(execute.into())
+    }
+}
+
+#[cw_serde]
+enum ReceiverExecuteMsg {
+    ReceiveNft(Cw721ReceiveMsg),
 }
