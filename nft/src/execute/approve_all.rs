@@ -28,7 +28,6 @@ pub fn handle(
             EventApproveAll {
                 operator,
                 sender: info.sender,
-            }
-            .into(),
+            },
         ))
 }

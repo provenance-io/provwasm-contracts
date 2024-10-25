@@ -166,8 +166,7 @@ pub fn handle(
             EventMint {
                 recipient,
                 token_id,
-            }
-            .into(),
+            },
         )
         .add_message(write_scope_msg)
         .add_message(write_session_msg)

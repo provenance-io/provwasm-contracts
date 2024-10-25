@@ -29,6 +29,6 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::Burn {})
-        .add_event(EventBurn { token_id }.into())
+        .add_event(EventBurn { token_id })
         .add_message(burn_msg))
 }

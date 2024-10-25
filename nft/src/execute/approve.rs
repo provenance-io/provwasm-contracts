@@ -18,5 +18,5 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::Approve)
-        .add_event(EventApprove { spender, token_id }.into()))
+        .add_event(EventApprove { spender, token_id }))
 }
