@@ -114,8 +114,7 @@ pub fn handle(
             EventTransfer {
                 recipient,
                 token_id,
-            }
-            .into(),
+            },
         )
         .add_message(update_scope_value_owner_msg)
         .add_message(write_session_msg)

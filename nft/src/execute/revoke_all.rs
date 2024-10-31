@@ -19,7 +19,6 @@ pub fn handle(
             EventRevokeAll {
                 operator,
                 sender: info.sender,
-            }
-            .into(),
+            },
         ))
 }
