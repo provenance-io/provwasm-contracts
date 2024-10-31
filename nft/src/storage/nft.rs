@@ -11,7 +11,7 @@ use crate::core::constants::NFT_OWNER_KEY;
 pub const INDEXES: TokenIndexes = TokenIndexes {
     owner: MultiIndex::new(token_owner_idx, NFT_KEY, NFT_OWNER_KEY),
 };
-pub const TOKENS: IndexedMap<'static, &'static str, Nft, TokenIndexes<'static>> =
+pub const TOKENS: IndexedMap<&'static str, Nft, TokenIndexes<'static>> =
     IndexedMap::new(NFT_KEY, INDEXES);
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
