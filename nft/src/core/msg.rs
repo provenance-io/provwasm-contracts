@@ -233,37 +233,3 @@ pub struct ContractInfoResponse {
 pub struct ContractVersionResponse {
     pub contract_version: ContractVersion,
 }
-
-#[cw_serde]
-pub struct Cw721ReceiveMsg {
-    pub sender: String,
-    pub token_id: String,
-    pub msg: Binary,
-}
-
-impl Cw721ReceiveMsg {
-    /// serializes the message
-    pub fn into_binary(self) -> StdResult<Binary> {
-        let msg = ReceiverExecuteMsg::ReceiveNft(self);
-        to_json_binary(&msg)
-    }
-
-    /// creates a cosmos_msg sending this struct to the named contract
-    pub fn into_cosmos_msg<T: Into<String>, C>(self, contract_addr: T) -> StdResult<CosmosMsg<C>>
-    where
-        C: Clone + std::fmt::Debug + PartialEq + JsonSchema,
-    {
-        let msg = self.into_binary()?;
-        let execute = WasmMsg::Execute {
-            contract_addr: contract_addr.into(),
-            msg,
-            funds: vec![],
-        };
-        Ok(execute.into())
-    }
-}
-
-#[cw_serde]
-enum ReceiverExecuteMsg {
-    ReceiveNft(Cw721ReceiveMsg),
-}
