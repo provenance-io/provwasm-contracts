@@ -52,7 +52,7 @@ pub struct Approval {
     /// Account that can transfer/send the token
     pub spender: String,
     /// When the Approval expires (maybe Expiration::never)
-    pub expires: cw721::Expiration,
+    pub expires: Expiration,
 }
 
 #[cw_serde]
@@ -67,7 +67,7 @@ pub struct ApprovalsResponse {
 
 #[cw_serde]
 pub struct OperatorResponse {
-    pub approval: cw721::Approval,
+    pub approval: Approval,
 }
 
 #[cw_serde]

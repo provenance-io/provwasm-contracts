@@ -1,6 +1,5 @@
 use cosmwasm_std::{to_json_binary, Binary, Deps, Env, StdError};
-use cw721::OperatorResponse;
-
+use crate::core::cw721::{Approval, OperatorResponse};
 use crate::core::error::ContractError;
 use crate::storage::operators::OPERATORS;
 
@@ -23,7 +22,7 @@ pub fn handle(
             )));
         }
         return Ok(to_json_binary(&OperatorResponse {
-            approval: cw721::Approval {
+            approval: Approval {
                 spender: operator,
                 expires,
             },
