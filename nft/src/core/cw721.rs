@@ -44,7 +44,7 @@ pub struct OwnerOfResponse {
     /// Owner of the token
     pub owner: String,
     /// If set this address is approved to transfer/send the token as well
-    pub approvals: Vec<cw721::Approval>,
+    pub approvals: Vec<Approval>,
 }
 
 #[cw_serde]
@@ -57,12 +57,12 @@ pub struct Approval {
 
 #[cw_serde]
 pub struct ApprovalResponse {
-    pub approval: cw721::Approval,
+    pub approval: Approval,
 }
 
 #[cw_serde]
 pub struct ApprovalsResponse {
-    pub approvals: Vec<cw721::Approval>,
+    pub approvals: Vec<Approval>,
 }
 
 #[cw_serde]
@@ -72,7 +72,7 @@ pub struct OperatorResponse {
 
 #[cw_serde]
 pub struct OperatorsResponse {
-    pub operators: Vec<cw721::Approval>,
+    pub operators: Vec<Approval>,
 }
 
 #[cw_serde]
@@ -99,9 +99,9 @@ pub struct NftInfoResponse<T> {
 #[cw_serde]
 pub struct AllNftInfoResponse<T> {
     /// Who can transfer the token
-    pub access: cw721::OwnerOfResponse,
+    pub access: OwnerOfResponse,
     /// Data on the token itself,
-    pub info: cw721::NftInfoResponse<T>,
+    pub info: NftInfoResponse<T>,
 }
 
 #[cw_serde]
