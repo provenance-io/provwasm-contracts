@@ -39,6 +39,79 @@ enum ReceiverExecuteMsg {
     ReceiveNft(Cw721ReceiveMsg),
 }
 
+#[cw_serde]
+pub struct OwnerOfResponse {
+    /// Owner of the token
+    pub owner: String,
+    /// If set this address is approved to transfer/send the token as well
+    pub approvals: Vec<cw721::Approval>,
+}
+
+#[cw_serde]
+pub struct Approval {
+    /// Account that can transfer/send the token
+    pub spender: String,
+    /// When the Approval expires (maybe Expiration::never)
+    pub expires: cw721::Expiration,
+}
+
+#[cw_serde]
+pub struct ApprovalResponse {
+    pub approval: cw721::Approval,
+}
+
+#[cw_serde]
+pub struct ApprovalsResponse {
+    pub approvals: Vec<cw721::Approval>,
+}
+
+#[cw_serde]
+pub struct OperatorResponse {
+    pub approval: cw721::Approval,
+}
+
+#[cw_serde]
+pub struct OperatorsResponse {
+    pub operators: Vec<cw721::Approval>,
+}
+
+#[cw_serde]
+pub struct NumTokensResponse {
+    pub count: u64,
+}
+
+#[cw_serde]
+pub struct ContractInfoResponse {
+    pub name: String,
+    pub symbol: String,
+}
+
+#[cw_serde]
+pub struct NftInfoResponse<T> {
+    /// Universal resource identifier for this NFT
+    /// Should point to a JSON file that conforms to the ERC721
+    /// Metadata JSON Schema
+    pub token_uri: Option<String>,
+    /// You can add any custom metadata here when you extend cw721-base
+    pub extension: T,
+}
+
+#[cw_serde]
+pub struct AllNftInfoResponse<T> {
+    /// Who can transfer the token
+    pub access: cw721::OwnerOfResponse,
+    /// Data on the token itself,
+    pub info: cw721::NftInfoResponse<T>,
+}
+
+#[cw_serde]
+pub struct TokensResponse {
+    /// Contains all token_ids in lexicographical ordering
+    /// If there are more than `limit`, use `start_after` in future queries
+    /// to achieve pagination.
+    pub tokens: Vec<String>,
+}
+
 /// Expiration represents a point in time when some event happens.
 /// It can compare with a BlockInfo and will return is_expired() == true
 /// once the condition is hit (and for every block in the future)
