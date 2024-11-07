@@ -1,5 +1,5 @@
 use cosmwasm_std::{to_json_binary, Binary, Deps, Env};
-use cw721::ApprovalsResponse;
+use crate::core::cw721::{Approval, ApprovalsResponse};
 
 use crate::core::error::ContractError;
 use crate::storage::nft::TOKENS;
@@ -15,7 +15,7 @@ pub fn handle(
         .approvals
         .into_iter()
         .filter(|t| include_expired || !t.is_expired(&env.block))
-        .map(|a| cw721::Approval {
+        .map(|a| Approval {
             spender: a.spender.into_string(),
             expires: a.expires,
         })
