@@ -18,11 +18,9 @@ crate-type = ["cdylib", "rlib"]
 backtraces = []
 
 [dependencies]
-bech32 = "0.11.0"
 cosmwasm-schema = { workspace = true }
 cosmwasm-std = { workspace = true }
 cw2 = { workspace = true }
-cw721 = "0.18.0"
 cw-ownable = "2.1.0"
 cw-storage-plus = { workspace = true }
 cw-utils = "2.0.0"
@@ -30,13 +28,9 @@ hex = { version = "0.4.3", default-features = false }
 provwasm-std = { workspace = true }
 schemars = { workspace = true }
 serde = { workspace = true }
-serde_json = { workspace = true }
 sha2 = { version = "0.10.7", default-features = false }
 thiserror = { workspace = true }
-semver = { workspace = true }
 uuid = { version = "1.4.1", default-features = false }
 
 [dev-dependencies]
-serde_json = { workspace = true }
 provwasm-mocks = { workspace = true }
-cw-multi-test = "0.16.2"
