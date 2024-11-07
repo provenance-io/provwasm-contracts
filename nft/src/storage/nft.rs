@@ -1,11 +1,11 @@
 use cosmwasm_std::{Addr, BlockInfo};
 use cw_storage_plus::{Index, IndexList, IndexedMap, MultiIndex};
-use cw_utils::Expiration;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::core::constants::NFT_KEY;
 use crate::core::constants::NFT_OWNER_KEY;
+use crate::core::cw721::Expiration;
 
 // pub const NFT: Item<Nft> = Item::new(NFT_KEY);
 pub const INDEXES: TokenIndexes = TokenIndexes {

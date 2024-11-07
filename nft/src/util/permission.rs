@@ -1,6 +1,6 @@
 use cosmwasm_std::{Addr, BlockInfo, Deps, DepsMut, Env, MessageInfo, StdResult};
 use cw_ownable::OwnershipError;
-use cw_utils::Expiration;
+use crate::core::cw721::Expiration;
 
 use crate::core::error::ContractError;
 use crate::storage::nft::{Approval, Nft, TOKENS};
@@ -97,8 +97,8 @@ pub fn modify_approvals(
     Ok(nft)
 }
 
-pub fn parse_approval(item: StdResult<(Addr, Expiration)>) -> StdResult<cw721::Approval> {
-    item.map(|(spender, expires)| cw721::Approval {
+pub fn parse_approval(item: StdResult<(Addr, Expiration)>) -> StdResult<crate::core::cw721::Approval> {
+    item.map(|(spender, expires)| crate::core::cw721::Approval {
         spender: spender.to_string(),
         expires,
     })
@@ -107,7 +107,7 @@ pub fn humanize_approvals(
     block: &BlockInfo,
     info: &Nft,
     include_expired: bool,
-) -> Vec<cw721::Approval> {
+) -> Vec<crate::core::cw721::Approval> {
     info.approvals
         .iter()
         .filter(|apr| include_expired || !apr.is_expired(block))
@@ -115,8 +115,8 @@ pub fn humanize_approvals(
         .collect()
 }
 
-pub fn humanize_approval(approval: &Approval) -> cw721::Approval {
-    cw721::Approval {
+pub fn humanize_approval(approval: &Approval) -> crate::core::cw721::Approval {
+    crate::core::cw721::Approval {
         spender: approval.spender.to_string(),
         expires: approval.expires,
     }
