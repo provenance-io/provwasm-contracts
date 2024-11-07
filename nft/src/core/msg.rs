@@ -1,10 +1,9 @@
 use cosmwasm_schema::{cw_serde, QueryResponses};
-use cosmwasm_std::{to_json_binary, Addr, Binary, CosmosMsg, StdResult, WasmMsg};
+use cosmwasm_std::{Addr, Binary, CosmosMsg, StdResult, WasmMsg};
 use cw2::ContractVersion;
 use cw_ownable::{cw_ownable_execute, cw_ownable_query};
 use cw_utils::Expiration;
 use provwasm_std::types::provenance::metadata::v1::ScopeResponse;
-use schemars::JsonSchema;
 
 #[cw_serde]
 pub enum InstantiateMsg {
