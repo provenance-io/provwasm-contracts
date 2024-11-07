@@ -218,7 +218,14 @@ pub struct MinterResponse {
 pub struct NftData {
     pub id: String,
     pub owner: Addr,
-    pub data: ScopeResponse,
+    pub data: Option<Scope>,
+}
+
+#[cw_serde]
+pub struct Scope {
+    pub scope_id: Vec<u8>,
+    pub specification_id: Vec<u8>,
+    pub value_owner_address: String,
 }
 
 #[cw_serde]
