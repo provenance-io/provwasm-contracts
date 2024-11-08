@@ -2,8 +2,8 @@ use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{Addr, Binary, CosmosMsg, StdResult, WasmMsg};
 use cw2::ContractVersion;
 use cw_ownable::{cw_ownable_execute, cw_ownable_query};
-use cw_utils::Expiration;
 use provwasm_std::types::provenance::metadata::v1::ScopeResponse;
+use crate::core::cw721::Expiration;
 
 #[cw_serde]
 pub enum InstantiateMsg {

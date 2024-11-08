@@ -1,5 +1,5 @@
 use cosmwasm_std::{Addr, Binary, DepsMut, Env, MessageInfo, Response};
-use cw721::Cw721ReceiveMsg;
+use crate::core::cw721::Cw721ReceiveMsg;
 use provwasm_std::types::provenance::metadata::v1::process::ProcessId;
 use provwasm_std::types::provenance::metadata::v1::record_input::Source;
 use provwasm_std::types::provenance::metadata::v1::{
@@ -117,7 +117,7 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::Send)
-        .add_event(EventSend { contract, token_id }.into())
+        .add_event(EventSend { contract, token_id })
         .add_message(update_scope_value_owner_msg)
         .add_message(write_session_msg)
         .add_message(write_record_msg)

@@ -1,6 +1,5 @@
 use cosmwasm_std::{Addr, DepsMut, Env, MessageInfo, Response};
-use cw_utils::Expiration;
-
+use crate::core::cw721::Expiration;
 use crate::core::error::ContractError;
 use crate::events::approve::EventApprove;
 use crate::util::action::{Action, ActionType};
