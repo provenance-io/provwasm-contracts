@@ -1,5 +1,6 @@
 use cosmwasm_std::{Addr, DepsMut, Env, MessageInfo, Response};
 use cw2::set_contract_version;
+use provwasm_std::metadata_address::MetadataAddress;
 use provwasm_std::types::provenance::metadata::v1::contract_specification::Source;
 use provwasm_std::types::provenance::metadata::v1::{
     ContractSpecification, Description, MsgWriteContractSpecificationRequest,
@@ -11,7 +12,6 @@ use crate::core::error::ContractError;
 use crate::core::msg::ContractInfoResponse;
 use crate::storage::contract_info::CONTRACT_INFO;
 use crate::storage::state::State;
-use crate::util::metadata_address::MetadataAddress;
 use crate::{
     core::constants::{CONTRACT_NAME, CONTRACT_VERSION},
     storage,

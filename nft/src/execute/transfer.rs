@@ -1,4 +1,5 @@
 use cosmwasm_std::{Addr, DepsMut, Env, MessageInfo, Response};
+use provwasm_std::metadata_address::MetadataAddress;
 use provwasm_std::types::provenance::metadata::v1::process::ProcessId;
 use provwasm_std::types::provenance::metadata::v1::record_input::Source;
 use provwasm_std::types::provenance::metadata::v1::{
@@ -10,7 +11,6 @@ use uuid::Uuid;
 
 use crate::events::transfer::EventTransfer;
 use crate::storage::nft::TOKENS;
-use crate::util::metadata_address::MetadataAddress;
 use crate::util::{parse_uuid, permission};
 use crate::{
     core::error::ContractError,

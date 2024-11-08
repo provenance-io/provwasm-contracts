@@ -1,4 +1,5 @@
 use cosmwasm_std::{Addr, Binary, DepsMut, Env, MessageInfo, Response};
+use provwasm_std::metadata_address::MetadataAddress;
 use crate::core::cw721::Cw721ReceiveMsg;
 use provwasm_std::types::provenance::metadata::v1::process::ProcessId;
 use provwasm_std::types::provenance::metadata::v1::record_input::Source;
@@ -14,7 +15,6 @@ use crate::events::send::EventSend;
 use crate::storage;
 use crate::storage::nft::TOKENS;
 use crate::util::action::{Action, ActionType};
-use crate::util::metadata_address::MetadataAddress;
 use crate::util::{parse_uuid, permission};
 
 pub fn handle(
