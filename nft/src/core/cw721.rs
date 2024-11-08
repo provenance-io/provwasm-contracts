@@ -1,9 +1,11 @@
 use cosmwasm_schema::cw_serde;
-use cosmwasm_std::{to_json_binary, Binary, BlockInfo, CosmosMsg, StdError, StdResult, Timestamp, WasmMsg};
+use cosmwasm_std::{
+    to_json_binary, Binary, BlockInfo, CosmosMsg, StdError, StdResult, Timestamp, WasmMsg,
+};
+use schemars::JsonSchema;
 use std::cmp::Ordering;
 use std::fmt;
 use std::ops::{Add, Mul};
-use schemars::JsonSchema;
 
 #[cw_serde]
 pub struct Cw721ReceiveMsg {

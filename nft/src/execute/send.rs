@@ -1,6 +1,6 @@
+use crate::core::cw721::Cw721ReceiveMsg;
 use cosmwasm_std::{Addr, Binary, DepsMut, Env, MessageInfo, Response};
 use provwasm_std::metadata_address::MetadataAddress;
-use crate::core::cw721::Cw721ReceiveMsg;
 use provwasm_std::types::provenance::metadata::v1::process::ProcessId;
 use provwasm_std::types::provenance::metadata::v1::record_input::Source;
 use provwasm_std::types::provenance::metadata::v1::{

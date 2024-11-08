@@ -162,12 +162,10 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::Mint)
-        .add_event(
-            EventMint {
-                recipient,
-                token_id,
-            },
-        )
+        .add_event(EventMint {
+            recipient,
+            token_id,
+        })
         .add_message(write_scope_msg)
         .add_message(write_session_msg)
         .add_message(write_record_spec_msg)

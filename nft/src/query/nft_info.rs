@@ -1,9 +1,9 @@
-use cosmwasm_std::{to_json_binary, Binary, Deps, Env, QuerierWrapper, StdError};
-use provwasm_std::types::provenance::metadata::v1::{MetadataQuerier, ScopeResponse};
 use crate::core::cw721::NftInfoResponse;
 use crate::core::error::ContractError;
 use crate::core::msg::{NftData, Scope};
 use crate::storage::nft::TOKENS;
+use cosmwasm_std::{to_json_binary, Binary, Deps, Env, QuerierWrapper, StdError};
+use provwasm_std::types::provenance::metadata::v1::{MetadataQuerier, ScopeResponse};
 
 pub fn handle(deps: Deps, _env: Env, token_id: String) -> Result<Binary, ContractError> {
     let info = TOKENS.load(deps.storage, &token_id)?;

@@ -15,10 +15,8 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::RevokeAll)
-        .add_event(
-            EventRevokeAll {
-                operator,
-                sender: info.sender,
-            },
-        ))
+        .add_event(EventRevokeAll {
+            operator,
+            sender: info.sender,
+        }))
 }

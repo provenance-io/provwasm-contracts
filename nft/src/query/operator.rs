@@ -1,7 +1,7 @@
-use cosmwasm_std::{to_json_binary, Binary, Deps, Env, StdError};
 use crate::core::cw721::{Approval, OperatorResponse};
 use crate::core::error::ContractError;
 use crate::storage::operators::OPERATORS;
+use cosmwasm_std::{to_json_binary, Binary, Deps, Env, StdError};
 
 pub fn handle(
     deps: Deps,

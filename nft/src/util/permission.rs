@@ -1,6 +1,6 @@
+use crate::core::cw721::Expiration;
 use cosmwasm_std::{Addr, BlockInfo, Deps, DepsMut, Env, MessageInfo, StdResult};
 use cw_ownable::OwnershipError;
-use crate::core::cw721::Expiration;
 
 use crate::core::error::ContractError;
 use crate::storage::nft::{Approval, Nft, TOKENS};
@@ -97,7 +97,9 @@ pub fn modify_approvals(
     Ok(nft)
 }
 
-pub fn parse_approval(item: StdResult<(Addr, Expiration)>) -> StdResult<crate::core::cw721::Approval> {
+pub fn parse_approval(
+    item: StdResult<(Addr, Expiration)>,
+) -> StdResult<crate::core::cw721::Approval> {
     item.map(|(spender, expires)| crate::core::cw721::Approval {
         spender: spender.to_string(),
         expires,
