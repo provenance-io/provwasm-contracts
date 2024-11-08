@@ -33,7 +33,7 @@ pub fn handle(deps: DepsMut, sender: Addr, security_types: &[Security]) -> ProvT
 
     Ok(Response::default()
         .set_action(ActionType::AddSecurityTypes {})
-        .add_event(UpdateSecurityTypesEvent::new().into()))
+        .add_event(UpdateSecurityTypesEvent::new()))
 }
 
 #[cfg(test)]

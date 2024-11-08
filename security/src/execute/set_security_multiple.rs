@@ -43,7 +43,7 @@ pub fn handle(
     Ok(Response::default()
         .set_action(ActionType::SetSecurityMultiple {})
         .add_event(
-            SetSecurityMultipleEvent::new(Uint64::new(assets.len() as u64), security).into(),
+            SetSecurityMultipleEvent::new(Uint64::new(assets.len() as u64), security),
         ))
 }
 

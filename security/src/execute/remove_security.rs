@@ -33,7 +33,7 @@ pub fn handle(deps: DepsMut, sender: Addr, asset_addr: Addr) -> ProvTxResponse {
 
     Ok(Response::default()
         .set_action(ActionType::RemoveSecurity {})
-        .add_event(RemoveSecurityEvent::new(&asset_addr, &security).into()))
+        .add_event(RemoveSecurityEvent::new(&asset_addr, &security)))
 }
 
 #[cfg(test)]

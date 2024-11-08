@@ -32,7 +32,7 @@ pub fn handle(deps: DepsMut, sender: Addr, new_owner: Addr) -> ProvTxResponse {
 
     Ok(Response::default()
         .set_action(ActionType::ChangeOwner {})
-        .add_event(ChangeOwnerEvent::new(sender, new_owner).into()))
+        .add_event(ChangeOwnerEvent::new(sender, new_owner)))
 }
 
 #[cfg(test)]

@@ -39,7 +39,7 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::SetSecurity {})
-        .add_event(SetSecurityEvent::new(&asset_addr, security).into()))
+        .add_event(SetSecurityEvent::new(&asset_addr, security)))
 }
 
 pub fn set_security(
