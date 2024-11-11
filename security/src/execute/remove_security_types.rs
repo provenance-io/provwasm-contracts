@@ -107,9 +107,9 @@ mod tests {
             handle(deps.as_mut(), sender, &security_types).expect("should not return an error");
 
         let found = storage::security::has_type(&deps.storage, &Security::new(TAG1));
-        assert_eq!(false, found);
+        assert!(!found);
         let found = storage::security::has_type(&deps.storage, &Security::new(TAG2));
-        assert_eq!(true, found);
+        assert!(found);
         assert_eq!(expected_attributes, res.attributes);
         assert_eq!(expected_events, res.events);
     }
@@ -128,7 +128,7 @@ mod tests {
 
         for security in &security_types {
             let found = storage::security::has_type(&deps.storage, security);
-            assert_eq!(false, found);
+            assert!(!found);
         }
         assert_eq!(expected_attributes, res.attributes);
         assert_eq!(expected_events, res.events);

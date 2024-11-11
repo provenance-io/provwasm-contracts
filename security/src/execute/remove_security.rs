@@ -85,7 +85,7 @@ mod tests {
             handle(deps.as_mut(), sender, asset_addr.clone()).expect("should not return an error");
         let found = storage::asset::has_security(&deps.storage, &Security::new(TAG1));
 
-        assert_eq!(false, found);
+        assert!(!found);
         assert_eq!(
             vec![Attribute::from(ActionType::RemoveSecurity {})],
             res.attributes
@@ -105,6 +105,6 @@ mod tests {
         handle(deps.as_mut(), sender, asset_addr.clone()).expect_err("should return an error");
 
         let found = storage::asset::has_security(&deps.storage, &Security::new(TAG1));
-        assert_eq!(false, found);
+        assert!(!found);
     }
 }
