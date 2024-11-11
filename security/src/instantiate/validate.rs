@@ -62,7 +62,7 @@ mod tests {
     fn test_validate_funds_has_no_funds() {
         let funds = vec![];
         let message = mock_instantiate_msg();
-        assert_eq!((), message.validate_funds(&funds).unwrap());
+        assert!(message.validate_funds(&funds).is_ok());
     }
 
     #[test]
@@ -80,7 +80,7 @@ mod tests {
     fn test_validate_succeeds() {
         let deps = mock_provenance_dependencies();
         let message = mock_instantiate_msg();
-        let response = message.validate(deps.as_ref()).unwrap();
-        assert_eq!((), response);
+        let response = message.validate(deps.as_ref());
+        assert!(response.is_ok());
     }
 }

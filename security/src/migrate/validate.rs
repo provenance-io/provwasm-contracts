@@ -26,7 +26,7 @@ impl Validate for MigrateMsg {
     fn validate(&self, deps: Deps) -> ValidateResult {
         let storage = deps.storage;
         let version: Version = CONTRACT_VERSION.parse()?;
-        let storage_version: Version = cw2::get_contract_version(storage)?.version.parse().unwrap();
+        let storage_version: Version = cw2::get_contract_version(storage)?.version.parse()?;
         let ver = cw2::get_contract_version(storage)?;
 
         if ver.contract != CONTRACT_NAME {
@@ -80,7 +80,7 @@ mod tests {
     #[test]
     fn test_validate_funds() {
         let msg = MigrateMsg::Default {};
-        assert_eq!((), msg.validate_funds(&[]).unwrap());
+        assert!(msg.validate_funds(&[]).is_ok());
     }
 
     #[test]
