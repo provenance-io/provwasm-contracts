@@ -49,21 +49,21 @@ mod tests {
     fn test_query_owner_validate_succeeds() {
         let query = QueryMsg::QueryOwner {};
         let deps = mock_provenance_dependencies();
-        assert_eq!((), query.validate(deps.as_ref()).unwrap());
+        assert!(query.validate(deps.as_ref()).is_ok());
     }
 
     #[test]
     fn test_query_version_validate_succeeds() {
         let query = QueryMsg::QueryVersion {};
         let deps = mock_provenance_dependencies();
-        assert_eq!((), query.validate(deps.as_ref()).unwrap())
+        assert!(query.validate(deps.as_ref()).is_ok());
     }
 
     #[test]
     fn test_query_funds_should_always_return_true() {
         let query1 = QueryMsg::QueryVersion {};
         let query2 = QueryMsg::QueryOwner {};
-        assert_eq!((), query1.validate_funds(&[]).unwrap());
-        assert_eq!((), query2.validate_funds(&[]).unwrap());
+        assert!(query1.validate_funds(&[]).is_ok());
+        assert!(query2.validate_funds(&[]).is_ok());
     }
 }
