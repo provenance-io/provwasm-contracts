@@ -24,7 +24,7 @@ pub fn add_type(storage: &mut dyn Storage, security: &Security) -> Result<(), Co
     let default_name = String::default();
     let key: (&str, &str) = (
         &security.category,
-        &security.name.as_ref().unwrap_or(&default_name),
+        security.name.as_ref().unwrap_or(&default_name),
     );
     Ok(SECURITY_TYPES.save(storage, key, &Empty {})?)
 }
@@ -44,7 +44,7 @@ pub fn remove_type(storage: &mut dyn Storage, security: &Security) {
     let default_name = String::default();
     let key: (&str, &str) = (
         &security.category,
-        &security.name.as_ref().unwrap_or(&default_name),
+        security.name.as_ref().unwrap_or(&default_name),
     );
     SECURITY_TYPES.remove(storage, key);
 }
@@ -64,7 +64,7 @@ pub fn has_type(storage: &dyn Storage, security: &Security) -> bool {
     let default_name = String::default();
     let key: (&str, &str) = (
         &security.category,
-        &security.name.as_ref().unwrap_or(&default_name),
+        security.name.as_ref().unwrap_or(&default_name),
     );
     SECURITY_TYPES.has(storage, key)
 }
@@ -88,7 +88,7 @@ pub fn get_types(
     let start = paginate.start_after.as_ref().map(|security| {
         let key: (&str, &str) = (
             &security.category,
-            &security.name.as_ref().unwrap_or(&default_name),
+            security.name.as_ref().unwrap_or(&default_name),
         );
         Bound::exclusive(key)
     });

@@ -49,7 +49,7 @@ pub fn with_security(
     let default_string = String::default();
     let prefix_key: (&str, &str) = (
         &security.category,
-        &security.name.as_ref().unwrap_or(&default_string),
+        security.name.as_ref().unwrap_or(&default_string),
     );
     let start = paginate.start_after.as_ref().map(Bound::exclusive);
     let limit = paginate
@@ -123,7 +123,7 @@ pub fn has_security(storage: &dyn Storage, security: &Security) -> bool {
     let default_name = String::default();
     let key: (&str, &str) = (
         &security.category,
-        &security.name.as_ref().unwrap_or(&default_name),
+        security.name.as_ref().unwrap_or(&default_name),
     );
     !SECURITY_TO_ASSET.prefix(key).is_empty(storage)
 }
@@ -154,7 +154,7 @@ pub fn set_security(
         storage,
         (
             &security.category,
-            &security.name.as_ref().unwrap_or(&"".to_string()),
+            security.name.as_ref().unwrap_or(&"".to_string()),
             asset_addr,
         ),
         &Empty {},
@@ -182,7 +182,7 @@ pub fn remove_security(storage: &mut dyn Storage, asset_addr: &Addr) {
             storage,
             (
                 &security_to_remove.category,
-                &security_to_remove.name.as_ref().unwrap_or(&"".to_string()),
+                security_to_remove.name.as_ref().unwrap_or(&"".to_string()),
                 asset_addr,
             ),
         );
@@ -268,7 +268,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -292,7 +292,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -319,7 +319,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -329,7 +329,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security2.category,
-                    &security2.name.as_ref().unwrap_or(&"".to_string()),
+                    security2.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -363,7 +363,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -373,7 +373,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security2.category,
-                    &security2.name.as_ref().unwrap_or(&"".to_string()),
+                    security2.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr2,
                 ),
             )
@@ -407,7 +407,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -417,7 +417,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security2.category,
-                    &security2.name.as_ref().unwrap_or(&"".to_string()),
+                    security2.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr2,
                 ),
             )
@@ -443,7 +443,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -466,7 +466,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -489,7 +489,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -522,7 +522,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -532,7 +532,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security2.category,
-                    &security2.name.as_ref().unwrap_or(&"".to_string()),
+                    security2.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr2,
                 ),
             )
@@ -565,7 +565,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security.category,
-                    &security.name.as_ref().unwrap_or(&"".to_string()),
+                    security.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr,
                 ),
             )
@@ -575,7 +575,7 @@ mod tests {
                 &deps.storage,
                 (
                     &security2.category,
-                    &security2.name.as_ref().unwrap_or(&"".to_string()),
+                    security2.name.as_ref().unwrap_or(&"".to_string()),
                     &asset_addr2,
                 ),
             )
@@ -762,7 +762,7 @@ mod tests {
         let security = Security::new("tag1");
         let asset_addr11 = Addr::unchecked("test11");
         for asset_addr in &expected {
-            set_security(deps.as_mut().storage, &asset_addr, &security)
+            set_security(deps.as_mut().storage, asset_addr, &security)
                 .expect("should be successful");
         }
         set_security(deps.as_mut().storage, &asset_addr11, &security)
@@ -788,7 +788,7 @@ mod tests {
         let security = Security::new("tag1");
         let remainder = Addr::unchecked("test101");
         for asset_addr in &expected {
-            set_security(deps.as_mut().storage, &asset_addr, &security)
+            set_security(deps.as_mut().storage, asset_addr, &security)
                 .expect("should be successful");
         }
         set_security(deps.as_mut().storage, &remainder, &security).expect("should be successful");
@@ -875,7 +875,7 @@ mod tests {
 
         println!("Found addresses:");
         for pair in &res.unwrap() {
-            println!("{}", pair.1.to_string());
+            println!("{:?}", pair.1.to_string());
         }
     }
 
