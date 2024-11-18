@@ -21,8 +21,12 @@ impl SetSecurityEvent {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use security::core::msg::Security;
+    /// use security::events::set_security::SetSecurityEvent;
+    ///
     /// let asset_addr = Addr::unchecked("address");
-    /// let event = SetSecurityEvent::new(asset_addr, &Security::new("tag1"));
+    /// let event = SetSecurityEvent::new(&asset_addr, &Security::new("tag1"));
     /// ```
     pub fn new(asset_addr: &Addr, security: &Security) -> Self {
         Self {
