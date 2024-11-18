@@ -18,11 +18,6 @@ use crate::{
 /// * `sender` - The address of the message signer.
 /// * `new_owner` - The address of the contract's new owner.
 ///
-/// # Examples
-/// ```
-/// let msg = ExecuteMsg::ChangeOwner {new_owner: Addr::unchecked("new_owner")};
-/// let res = handle(deps, env, info.sender, msg.new_owner.as_slice())?;
-/// ```
 pub fn handle(deps: DepsMut, sender: Addr, new_owner: Addr) -> ProvTxResponse {
     if !storage::state::is_owner(deps.storage, &sender)? {
         return Err(ContractError::Unauthorized {});

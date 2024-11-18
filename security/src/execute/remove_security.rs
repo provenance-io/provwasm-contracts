@@ -18,11 +18,6 @@ use crate::{
 /// * `sender` - The address of the message signer.
 /// * `asset_addr` - The address of the asset to remove the security from.
 ///
-/// # Examples
-/// ```
-/// let msg = ExecuteMsg::RemoveSecurity {asset_addr: Addr::unchecked("addr")};
-/// let res = handle(deps, env, info.sender, msg.asset_addr)?;
-/// ```
 pub fn handle(deps: DepsMut, sender: Addr, asset_addr: Addr) -> ProvTxResponse {
     if !storage::state::is_owner(deps.storage, &sender)? {
         return Err(ContractError::Unauthorized {});

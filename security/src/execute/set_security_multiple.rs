@@ -21,11 +21,6 @@ use super::set_security::set_security;
 /// * `assets` - The addresses of the assets to set the security for.
 /// * `security` - The security to link to the asset.
 ///
-/// # Examples
-/// ```
-/// let msg = ExecuteMsg::SetSecurityMultiple {assets: vec![Addr::unchecked("addr")], security: Security::new("tag")};
-/// let res = handle(deps, env, info.sender, &msg.assets, &msg.security)?;
-/// ```
 pub fn handle(
     mut deps: DepsMut,
     sender: Addr,

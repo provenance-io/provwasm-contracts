@@ -18,10 +18,6 @@ use crate::{
 /// * `sender` - The address of the message signer.
 /// * `security_types` - The security types to be added.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, env, info.sender, msg.securities)?;
-/// ```
 pub fn handle(deps: DepsMut, sender: Addr, security_types: &[Security]) -> ProvTxResponse {
     if !storage::state::is_owner(deps.storage, &sender)? {
         return Err(ContractError::Unauthorized {});

@@ -20,11 +20,6 @@ use crate::{
 /// * `asset_addr` - The address of the asset to set the security for.
 /// * `security` - The security to link to the asset.
 ///
-/// # Examples
-/// ```
-/// let msg = ExecuteMsg::SetSecurity {asset_addr: Addr::unchecked("addr"), security: Security::new("tag")};
-/// let res = handle(deps, env, info.sender, msg.asset_addr, &msg.security)?;
-/// ```
 pub fn handle(
     mut deps: DepsMut,
     sender: Addr,

@@ -18,8 +18,17 @@ use super::{
 ///
 /// # Examples
 /// ```
+/// use cosmwasm_std::Addr;
+/// use cosmwasm_std::testing::{message_info, mock_env};
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::ExecuteMsg;
+/// use security::execute::router::route;
+///
+/// let mut deps = mock_provenance_dependencies();
+/// let env = mock_env();
+/// let info = message_info(&Addr::unchecked("sender"), &[]);
 /// let msg = ExecuteMsg::ChangeOwner {new_owner: Addr::unchecked("new_owner")};
-/// let res = route(deps, env, info, msg)?;
+/// let res = route(deps.as_mut(), env, info, msg);
 /// ```
 pub fn route(deps: DepsMut, _env: Env, info: MessageInfo, msg: ExecuteMsg) -> ProvTxResponse {
     match msg {
