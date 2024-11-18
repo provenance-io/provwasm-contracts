@@ -48,7 +48,7 @@ mod tests {
 
         assert!(matches!(
             err,
-            ContractError::Std(StdError::NotFound { kind: _ })
+            ContractError::Std(StdError::NotFound { kind: _, .. })
         ));
     }
 
@@ -64,7 +64,7 @@ mod tests {
         let bin = handle(deps.as_ref(), asset_addr).expect("should not return an error");
 
         let response: QueryAddressResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(security, response.security);
     }
 }

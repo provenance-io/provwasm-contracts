@@ -39,7 +39,7 @@ mod tests {
         let mut deps = mock_provenance_dependencies();
         setup::mock_contract(deps.as_mut());
         let bin = handle(deps.as_ref()).unwrap();
-        let response: QueryOwnerResponse = from_json(&bin).unwrap();
+        let response: QueryOwnerResponse = from_json(bin).unwrap();
         assert_eq!(Addr::unchecked(OWNER), response.owner);
     }
 }

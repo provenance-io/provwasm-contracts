@@ -54,7 +54,7 @@ mod tests {
         let bin = handle(deps.as_ref(), paginate).expect("should not return an error");
 
         let response: QuerySecurityTypesResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.securities);
     }
 
@@ -73,7 +73,7 @@ mod tests {
         let bin = handle(deps.as_ref(), paginate).expect("should not return an error");
 
         let response: QuerySecurityTypesResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.securities);
     }
 
@@ -93,7 +93,7 @@ mod tests {
         let bin = handle(deps.as_ref(), paginate).expect("should not return an error");
 
         let response: QuerySecurityTypesResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.securities);
     }
 }
