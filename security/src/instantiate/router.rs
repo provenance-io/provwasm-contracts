@@ -15,8 +15,17 @@ use super::default;
 ///
 /// # Examples
 /// ```
-/// let msg = InstantiateMsg::Default {owner: Addr::unchecked("owner"), tag_types: vec![Security::new("tag1")]};
-/// let res = route(deps, env, info, msg)?;
+/// use cosmwasm_std::Addr;
+/// use cosmwasm_std::testing::{message_info, mock_env};
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::{InstantiateMsg};
+/// use security::instantiate::router::route;
+///
+/// let mut deps = mock_provenance_dependencies();
+/// let env = mock_env();
+/// let info = message_info(&Addr::unchecked("sender"), &[]);
+/// let msg = InstantiateMsg::Default {owner: Addr::unchecked("owner"),security_types: vec![]};
+/// let res = route(deps.as_mut(), env, info, msg);
 /// ```
 pub fn route(deps: DepsMut, env: Env, _info: MessageInfo, msg: InstantiateMsg) -> ProvTxResponse {
     match msg {

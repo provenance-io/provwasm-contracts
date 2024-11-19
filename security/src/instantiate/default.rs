@@ -26,12 +26,6 @@ use crate::{
 /// * `owner` - The address of the contract's owner.
 /// * `security_types` - The initial tag types that this contract supports.
 ///
-///
-/// # Examples
-/// ```
-/// let msg = InstantiateMsg::Default {owner: Addr::unchecked("owner"), tag_types: vec![Security::new("tag1")]};
-/// let res = handle(deps, env, msg.owner, msg.security_types.as_slice())?;
-/// ```
 pub fn handle(deps: DepsMut, _: Env, owner: Addr, security_types: &[Security]) -> ProvTxResponse {
     storage::state::set(deps.storage, &State::new(owner))?;
     for security in security_types {
