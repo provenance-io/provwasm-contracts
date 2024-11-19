@@ -22,8 +22,13 @@ pub const SECURITY_TO_ASSET: Map<(&str, &str, &Addr), Empty> = Map::new(SECURITY
 ///
 /// # Examples
 /// ```
+/// use cosmwasm_std::Addr;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::storage::asset::get_security;
+///
+/// let deps = mock_provenance_dependencies();
 /// let addr = Addr::unchecked("addr1");
-/// get_security(deps.storage, &addr)?;
+/// let res = get_security(&deps.storage, &addr);
 /// ```
 pub fn get_security(storage: &dyn Storage, asset_addr: &Addr) -> Result<Security, ContractError> {
     Ok(ASSET_TO_SECURITY.load(storage, asset_addr)?)
@@ -39,7 +44,12 @@ pub fn get_security(storage: &dyn Storage, asset_addr: &Addr) -> Result<Security
 ///
 /// # Examples
 /// ```
-/// with_security(deps.storage, Security::new("security"), Paginate{limit: None, start_after: None})?;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::{Paginate, Security};
+/// use security::storage::asset::with_security;
+///
+/// let deps = mock_provenance_dependencies();
+/// let res = with_security(&deps.storage, &Security::new("security"), Paginate{limit: None, start_after: None});
 /// ```
 pub fn with_security(
     storage: &dyn Storage,
@@ -79,7 +89,12 @@ pub fn with_security(
 ///
 /// # Examples
 /// ```
-/// with_security_category(deps.storage, "category", Paginate{limit: None, start_after: None})?;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::{Paginate, Security};
+/// use security::storage::asset::with_security_category;
+///
+/// let deps = mock_provenance_dependencies();
+/// let res = with_security_category(&deps.storage, "category", Paginate{limit: None, start_after: None});
 /// ```
 pub fn with_security_category(
     storage: &dyn Storage,
@@ -117,7 +132,12 @@ pub fn with_security_category(
 ///
 /// # Examples
 /// ```
-/// has_security(deps.storage, Security::new("tag"))?;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::{Paginate, Security};
+/// use security::storage::asset::has_security;
+///
+/// let deps = mock_provenance_dependencies();
+/// let res = has_security(&deps.storage, &Security::new("tag"));
 /// ```
 pub fn has_security(storage: &dyn Storage, security: &Security) -> bool {
     let default_name = String::default();
@@ -140,8 +160,14 @@ pub fn has_security(storage: &dyn Storage, security: &Security) -> bool {
 ///
 /// # Examples
 /// ```
+/// use cosmwasm_std::Addr;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::{Paginate, Security};
+/// use security::storage::asset::set_security;
+///
+/// let mut deps = mock_provenance_dependencies();
 /// let addr = Addr::unchecked("addr1");
-/// set_security(deps.as_mut().storage, &addr, Security::new("tag"))?;
+/// let res = set_security(deps.as_mut().storage, &addr, &Security::new("tag"));
 /// ```
 pub fn set_security(
     storage: &mut dyn Storage,
@@ -171,8 +197,14 @@ pub fn set_security(
 ///
 /// # Examples
 /// ```
+/// use cosmwasm_std::Addr;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::{Paginate, Security};
+/// use security::storage::asset::remove_security;
+///
+/// let mut deps = mock_provenance_dependencies();
 /// let addr = Addr::unchecked("addr1");
-/// remove_security(deps.as_mut().storage, &addr);
+/// let res = remove_security(deps.as_mut().storage, &addr);
 /// ```
 pub fn remove_security(storage: &mut dyn Storage, asset_addr: &Addr) {
     let security = get_security(storage, asset_addr);

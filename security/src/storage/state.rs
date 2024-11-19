@@ -16,7 +16,11 @@ pub const STATE: Item<State> = Item::new(STATE_KEY);
 ///
 /// # Examples
 /// ```
-/// let storage = get(&deps.storage)?;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::storage::state::get;
+///
+/// let deps = mock_provenance_dependencies();
+/// let res = get(&deps.storage);
 /// ```
 pub fn get(storage: &dyn Storage) -> Result<State, ContractError> {
     Ok(STATE.load(storage)?)
@@ -31,8 +35,14 @@ pub fn get(storage: &dyn Storage) -> Result<State, ContractError> {
 ///
 /// # Examples
 /// ```
-/// let state = State::new(Addr::unchecked("addr1"),Fee {recipient: None, amount: Coin::new(0, "nhash"),});
-/// set(deps.as_mut().storage, &state)?;
+/// use cosmwasm_std::Addr;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::storage::state::set;
+/// use security::util::state::State;
+///
+/// let mut deps = mock_provenance_dependencies();
+/// let state = State::new(Addr::unchecked("addr1"));
+/// let res = set(&mut deps.storage, &state);
 /// ```
 pub fn set(storage: &mut dyn Storage, state: &State) -> Result<(), ContractError> {
     Ok(STATE.save(storage, state)?)
@@ -46,7 +56,11 @@ pub fn set(storage: &mut dyn Storage, state: &State) -> Result<(), ContractError
 ///
 /// # Examples
 /// ```
-/// let owner = get_owner(storage)?;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::storage::state::get_owner;
+///
+/// let deps = mock_provenance_dependencies();
+/// let res = get_owner(&deps.storage);
 /// ```
 pub fn get_owner(storage: &dyn Storage) -> Result<Addr, ContractError> {
     let state = get(storage)?;
@@ -62,7 +76,12 @@ pub fn get_owner(storage: &dyn Storage) -> Result<Addr, ContractError> {
 ///
 /// # Examples
 /// ```
-/// let is_owner = is_owner(storage, Addr::unchecked("owner"))?;
+/// use cosmwasm_std::Addr;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::storage::state::is_owner;
+///
+/// let deps = mock_provenance_dependencies();
+/// let res = is_owner(&deps.storage, &Addr::unchecked("owner"));
 /// ```
 pub fn is_owner(storage: &dyn Storage, account: &Addr) -> Result<bool, ContractError> {
     let owner = get_owner(storage)?;
@@ -78,7 +97,13 @@ pub fn is_owner(storage: &dyn Storage, account: &Addr) -> Result<bool, ContractE
 ///
 /// # Examples
 /// ```
-/// set_owner(storage, Addr::unchecked("new_owner"))?;
+/// use cosmwasm_std::Addr;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::storage::state::set_owner;
+/// use security::util::state::State;
+///
+/// let mut deps = mock_provenance_dependencies();
+/// let res = set_owner(&mut deps.storage, Addr::unchecked("new_owner"));
 /// ```
 pub fn set_owner(storage: &mut dyn Storage, owner: Addr) -> Result<(), ContractError> {
     let mut state = get(storage)?;
