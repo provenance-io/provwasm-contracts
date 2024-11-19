@@ -20,8 +20,16 @@ impl Validate for MigrateMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{MigrateMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
     /// let msg = MigrateMsg::Default {};
-    /// msg.validate(deps)?;
+    /// let result = msg.validate(deps.as_ref());
     /// ```
     fn validate(&self, deps: Deps) -> ValidateResult {
         let storage = deps.storage;
@@ -55,8 +63,16 @@ impl Validate for MigrateMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{MigrateMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
     /// let msg = MigrateMsg::Default {};
-    /// msg.validate_funds(deps, &info.funds)?;
+    /// let result = msg.validate_funds(&info.funds);
     /// ```
     fn validate_funds(&self, _funds: &[Coin]) -> ValidateResult {
         Ok(())

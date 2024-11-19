@@ -13,11 +13,6 @@ use crate::{
 /// * `env` - Information about the Blockchain's environment such as block height.
 /// * `msg` - The Default variant of MigrateMsg provided by the user.
 ///
-/// # Examples
-/// ```
-/// let msg = MigrateMsg::Default {};
-/// let res = handle(deps, env, msg)?;
-/// ```
 pub fn handle(_deps: &DepsMut, _env: Env, _msg: MigrateMsg) -> ProvTxResponse {
     Ok(Response::new().set_action(ActionType::Migrate {}))
 }
