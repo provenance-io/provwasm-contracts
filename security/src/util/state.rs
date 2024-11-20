@@ -16,8 +16,11 @@ impl State {
     ///
     /// # Examples
     /// ```
-    /// let owner = Addr::unchecked(OWNER);
-    /// let state = State::new(owner, fee);
+    /// use cosmwasm_std::Addr;
+    /// use security::util::state::State;
+    /// 
+    /// let owner = Addr::unchecked("owner");
+    /// let state = State::new(owner);
     /// ```
     pub fn new(owner: Addr) -> Self {
         State { owner }
