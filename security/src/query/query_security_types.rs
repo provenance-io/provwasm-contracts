@@ -15,11 +15,6 @@ use crate::{
 /// * `deps` - A non mutable version of the dependencies. The API, Querier, and storage can all be accessed from it.
 /// * `paginate` - A struct containing additional optional args for pagination.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, Paginate{limit: None, start_after: None})?;
-/// ```
-
 pub fn handle(deps: Deps, paginate: Paginate<Security>) -> ProvQueryResponse {
     let securities = storage::security::get_types(deps.storage, paginate)?;
     let res = QuerySecurityTypesResponse { securities };

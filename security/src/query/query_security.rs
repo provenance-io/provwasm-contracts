@@ -16,11 +16,6 @@ use crate::{
 /// * `security` - The security to lookup addresses by.
 /// * `paginate` - A struct containing additional optional args for pagination.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, &Security::new("tag1"), Paginate{limit: None, start_after: None})?;
-/// ```
-
 pub fn handle(deps: Deps, security: &Security, paginate: Paginate<Addr>) -> ProvQueryResponse {
     let assets = storage::asset::with_security(deps.storage, security, paginate)?;
     let res = QuerySecurityResponse { assets };

@@ -16,11 +16,6 @@ use crate::{
 /// * `security` - The security to lookup addresses by.
 /// * `paginate` - A struct containing additional optional args for pagination.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, &Security::new("tag1"), Paginate{limit: None, start_after: None})?;
-/// ```
-
 pub fn handle(
     deps: Deps,
     category: &str,

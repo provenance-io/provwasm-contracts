@@ -15,8 +15,16 @@ impl Validate for QueryMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{QueryMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
     /// let msg = QueryMsg::QueryVersion {};
-    /// msg.validate(deps)?;
+    /// let result = msg.validate(deps.as_ref());
     /// ```
     fn validate(&self, _deps: Deps) -> ValidateResult {
         Ok(())
@@ -31,8 +39,16 @@ impl Validate for QueryMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{QueryMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
     /// let msg = QueryMsg::QueryVersion {};
-    /// msg.validate_funds(deps, &info.funds)?;
+    /// let result = msg.validate_funds(&info.funds);
     /// ```
     fn validate_funds(&self, _funds: &[Coin]) -> ValidateResult {
         Ok(())
