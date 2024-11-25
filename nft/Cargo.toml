@@ -17,6 +17,18 @@ crate-type = ["cdylib", "rlib"]
 [features]
 backtraces = []
 
+[package.metadata.scripts]
+optimize = """docker run --rm -v $(pwd)/../:/code:Z --workdir /code/nft \
+  --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+  --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+  cosmwasm/rust-optimizer:0.16.0
+"""
+optimize-arm = """docker run --rm -v $(pwd)/../:/code:Z --workdir /code/nft \
+  --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+  --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+  cosmwasm/rust-optimizer-arm64:0.16.0
+"""
+
 [dependencies]
 cosmwasm-schema = { workspace = true }
 cosmwasm-std = { workspace = true }
@@ -24,7 +36,6 @@ cw2 = { workspace = true }
 cw-ownable = "2.1.0"
 cw-storage-plus = { workspace = true }
 cw-utils = "2.0.0"
-hex = { version = "0.4.3", default-features = false }
 provwasm-std = { workspace = true }
 schemars = { workspace = true }
 serde = { workspace = true }
