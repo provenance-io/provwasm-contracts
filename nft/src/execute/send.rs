@@ -34,18 +34,14 @@ pub fn handle(
     let contract_spec_uuid = parse_uuid(&state.contract_spec_uuid)?;
 
     let update_scope_value_owner_msg = MsgUpdateValueOwnersRequest {
-        scope_ids: vec![MetadataAddress::scope(token_id).unwrap().bytes],
+        scope_ids: vec![MetadataAddress::scope(token_id)?.bytes],
         value_owner_address: contract.to_string(),
         signers: vec![env.contract.address.to_string(), info.sender.to_string()],
     };
 
     let session = Session {
-        session_id: MetadataAddress::session(token_id, session_uuid)
-            .unwrap()
-            .bytes,
-        specification_id: MetadataAddress::contract_specification(contract_spec_uuid)
-            .unwrap()
-            .bytes,
+        session_id: MetadataAddress::session(token_id, session_uuid)?.bytes,
+        specification_id: MetadataAddress::contract_specification(contract_spec_uuid)?.bytes,
         parties: vec![Party {
             address: env.contract.address.to_string(),
             role: PartyType::Provenance.into(),

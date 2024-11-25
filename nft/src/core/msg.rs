@@ -3,7 +3,6 @@ use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{Addr, Binary};
 use cw2::ContractVersion;
 use cw_ownable::{cw_ownable_execute, cw_ownable_query};
-use provwasm_std::types::provenance::metadata::v1::ScopeResponse;
 
 #[cw_serde]
 pub enum InstantiateMsg {
@@ -173,12 +172,12 @@ pub enum QueryMsg {
     /// MetaData Extension
     /// Returns metadata about one particular token, based on *ERC721 Metadata JSON Schema*
     /// but directly from the contract
-    #[returns(crate::core::cw721::NftInfoResponse<ScopeResponse>)]
+    #[returns(crate::core::cw721::NftInfoResponse<NftData>)]
     NftInfo { token_id: String },
     /// MetaData Extension
     /// Returns the result of both `NftInfo` and `OwnerOf` as one query as an optimization
     /// for clients
-    #[returns(crate::core::cw721::AllNftInfoResponse<ScopeResponse>)]
+    #[returns(crate::core::cw721::AllNftInfoResponse<NftData>)]
     AllNftInfo {
         /// Token ID in UUID format (Scope UUID)
         token_id: String,

@@ -36,9 +36,7 @@ pub fn handle(
 
     let scope = Scope {
         scope_id: vec![],
-        specification_id: MetadataAddress::scope_specification(scope_spec_uuid)
-            .unwrap()
-            .bytes,
+        specification_id: MetadataAddress::scope_specification(scope_spec_uuid)?.bytes,
         owners: vec![Party {
             address: env.contract.address.to_string(),
             role: PartyType::Provenance.into(),
@@ -58,12 +56,8 @@ pub fn handle(
     };
 
     let session = Session {
-        session_id: MetadataAddress::session(token_id, session_uuid)
-            .unwrap()
-            .bytes,
-        specification_id: MetadataAddress::contract_specification(contract_spec_uuid)
-            .unwrap()
-            .bytes,
+        session_id: MetadataAddress::session(token_id, session_uuid)?.bytes,
+        specification_id: MetadataAddress::contract_specification(contract_spec_uuid)?.bytes,
         parties: vec![Party {
             address: env.contract.address.to_string(),
             role: PartyType::Provenance.into(),
