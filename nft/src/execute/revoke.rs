@@ -16,5 +16,5 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::Revoke)
-        .add_event(EventRevoke { spender, token_id }.into()))
+        .add_event(EventRevoke { spender, token_id }))
 }

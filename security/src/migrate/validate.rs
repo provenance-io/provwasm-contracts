@@ -20,13 +20,21 @@ impl Validate for MigrateMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{MigrateMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
     /// let msg = MigrateMsg::Default {};
-    /// msg.validate(deps)?;
+    /// let result = msg.validate(deps.as_ref());
     /// ```
     fn validate(&self, deps: Deps) -> ValidateResult {
         let storage = deps.storage;
         let version: Version = CONTRACT_VERSION.parse()?;
-        let storage_version: Version = cw2::get_contract_version(storage)?.version.parse().unwrap();
+        let storage_version: Version = cw2::get_contract_version(storage)?.version.parse()?;
         let ver = cw2::get_contract_version(storage)?;
 
         if ver.contract != CONTRACT_NAME {
@@ -55,8 +63,16 @@ impl Validate for MigrateMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{MigrateMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
     /// let msg = MigrateMsg::Default {};
-    /// msg.validate_funds(deps, &info.funds)?;
+    /// let result = msg.validate_funds(&info.funds);
     /// ```
     fn validate_funds(&self, _funds: &[Coin]) -> ValidateResult {
         Ok(())
@@ -80,7 +96,7 @@ mod tests {
     #[test]
     fn test_validate_funds() {
         let msg = MigrateMsg::Default {};
-        assert_eq!((), msg.validate_funds(&[]).unwrap());
+        assert!(msg.validate_funds(&[]).is_ok());
     }
 
     #[test]

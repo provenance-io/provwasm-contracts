@@ -21,6 +21,10 @@ impl RemoveSecurityEvent {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use security::core::msg::Security;
+    /// use security::events::remove_security::RemoveSecurityEvent;
+    /// 
     /// let asset_addr = Addr::unchecked("address");
     /// let security = Security::new("category");
     /// let event = RemoveSecurityEvent::new(&asset_addr, &security);
@@ -62,7 +66,7 @@ mod tests {
         let security = Security::new("category");
         let event = RemoveSecurityEvent::new(&addr, &security);
         assert_eq!(addr, event.asset_addr);
-        assert_eq!(addr.to_string(), event.asset_addr);
+        assert_eq!(addr.to_string(), event.asset_addr.to_string());
         assert_eq!(security.to_string(), event.security);
     }
 

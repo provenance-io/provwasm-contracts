@@ -18,13 +18,18 @@ pub const SECURITY_TYPES: Map<(&str, &str), Empty> = Map::new(SECURITY_TYPE_KEY)
 ///
 /// # Examples
 /// ```
-/// add_type(deps.as_mut().storage, Security{category: "category".to_string(), name: None})?;
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::Security;
+/// use security::storage::security::add_type;
+///
+/// let mut deps = mock_provenance_dependencies();
+/// let res = add_type(&mut deps.storage, &Security{category: "category".to_string(), name: None});
 /// ```
 pub fn add_type(storage: &mut dyn Storage, security: &Security) -> Result<(), ContractError> {
     let default_name = String::default();
     let key: (&str, &str) = (
         &security.category,
-        &security.name.as_ref().unwrap_or(&default_name),
+        security.name.as_ref().unwrap_or(&default_name),
     );
     Ok(SECURITY_TYPES.save(storage, key, &Empty {})?)
 }
@@ -38,13 +43,18 @@ pub fn add_type(storage: &mut dyn Storage, security: &Security) -> Result<(), Co
 ///
 /// # Examples
 /// ```
-/// remove_type(deps.as_mut().storage, Security{category: "category".to_string(), name: None});
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::Security;
+/// use security::storage::security::remove_type;
+///
+/// let mut deps = mock_provenance_dependencies();
+/// let res = remove_type(&mut deps.storage, &Security{category: "category".to_string(), name: None});
 /// ```
 pub fn remove_type(storage: &mut dyn Storage, security: &Security) {
     let default_name = String::default();
     let key: (&str, &str) = (
         &security.category,
-        &security.name.as_ref().unwrap_or(&default_name),
+        security.name.as_ref().unwrap_or(&default_name),
     );
     SECURITY_TYPES.remove(storage, key);
 }
@@ -58,13 +68,18 @@ pub fn remove_type(storage: &mut dyn Storage, security: &Security) {
 ///
 /// # Examples
 /// ```
-/// has_type(deps.storage, Security{category: "category".to_string(), name: None});
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::Security;
+/// use security::storage::security::has_type;
+///
+/// let deps = mock_provenance_dependencies();
+/// let res = has_type(&deps.storage, &Security{category: "category".to_string(), name: None});
 /// ```
 pub fn has_type(storage: &dyn Storage, security: &Security) -> bool {
     let default_name = String::default();
     let key: (&str, &str) = (
         &security.category,
-        &security.name.as_ref().unwrap_or(&default_name),
+        security.name.as_ref().unwrap_or(&default_name),
     );
     SECURITY_TYPES.has(storage, key)
 }
@@ -78,7 +93,12 @@ pub fn has_type(storage: &dyn Storage, security: &Security) -> bool {
 ///
 /// # Examples
 /// ```
-/// get_types(deps.storage, Paginate{limit: None, start_after: None});
+/// use provwasm_mocks::mock_provenance_dependencies;
+/// use security::core::msg::Paginate;
+/// use security::storage::security::get_types;
+///
+/// let deps = mock_provenance_dependencies();
+/// let res = get_types(&deps.storage, Paginate{limit: None, start_after: None});
 /// ```
 pub fn get_types(
     storage: &dyn Storage,
@@ -88,7 +108,7 @@ pub fn get_types(
     let start = paginate.start_after.as_ref().map(|security| {
         let key: (&str, &str) = (
             &security.category,
-            &security.name.as_ref().unwrap_or(&default_name),
+            security.name.as_ref().unwrap_or(&default_name),
         );
         Bound::exclusive(key)
     });

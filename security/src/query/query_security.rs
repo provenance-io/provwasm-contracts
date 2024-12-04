@@ -16,11 +16,6 @@ use crate::{
 /// * `security` - The security to lookup addresses by.
 /// * `paginate` - A struct containing additional optional args for pagination.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, &Security::new("tag1"), Paginate{limit: None, start_after: None})?;
-/// ```
-
 pub fn handle(deps: Deps, security: &Security, paginate: Paginate<Addr>) -> ProvQueryResponse {
     let assets = storage::asset::with_security(deps.storage, security, paginate)?;
     let res = QuerySecurityResponse { assets };
@@ -55,7 +50,7 @@ mod tests {
             .expect("should not return an error");
 
         let response: QuerySecurityResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.assets);
     }
 
@@ -76,7 +71,7 @@ mod tests {
             .expect("should not return an error");
 
         let response: QuerySecurityResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.assets);
     }
 
@@ -101,13 +96,13 @@ mod tests {
         let bin = handle(deps.as_ref(), &Security::new(TAG1), paginate.clone())
             .expect("should not return an error");
         let response: QuerySecurityResponse =
-            from_json(&bin).expect("should return correct response for first security");
+            from_json(bin).expect("should return correct response for first security");
         assert_eq!(expected, response.assets);
 
         let bin = handle(deps.as_ref(), &Security::new(TAG2), paginate)
             .expect("should not return an error");
         let response: QuerySecurityResponse =
-            from_json(&bin).expect("should return correct response for second security");
+            from_json(bin).expect("should return correct response for second security");
         assert_eq!(expected2, response.assets);
     }
 
@@ -131,7 +126,7 @@ mod tests {
         let bin = handle(deps.as_ref(), &Security::new(TAG1), paginate)
             .expect("should not return an error");
         let response: QuerySecurityResponse =
-            from_json(&bin).expect("should return correct response for security");
+            from_json(bin).expect("should return correct response for security");
         assert_eq!(expected, response.assets);
     }
 
@@ -162,13 +157,13 @@ mod tests {
         let bin = handle(deps.as_ref(), &Security::new(TAG1), paginate.clone())
             .expect("should not return an error");
         let response: QuerySecurityResponse =
-            from_json(&bin).expect("should return correct response for first tag");
+            from_json(bin).expect("should return correct response for first tag");
         assert_eq!(expected, response.assets);
 
         let bin = handle(deps.as_ref(), &Security::new(TAG2), paginate)
             .expect("should not return an error");
         let response: QuerySecurityResponse =
-            from_json(&bin).expect("should return correct response for second tag");
+            from_json(bin).expect("should return correct response for second tag");
         assert_eq!(expected2, response.assets);
     }
 }

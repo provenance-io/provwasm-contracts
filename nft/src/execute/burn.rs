@@ -1,4 +1,5 @@
 use cosmwasm_std::{DepsMut, Env, MessageInfo, Response};
+use provwasm_std::metadata_address::MetadataAddress;
 use provwasm_std::types::provenance::metadata::v1::MsgDeleteScopeRequest;
 use uuid::Uuid;
 
@@ -7,7 +8,6 @@ use crate::events::burn::EventBurn;
 use crate::storage::nft::TOKENS;
 use crate::storage::nft_count;
 use crate::util::action::{Action, ActionType};
-use crate::util::metadata_address::MetadataAddress;
 use crate::util::permission;
 
 pub fn handle(
@@ -29,6 +29,6 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::Burn {})
-        .add_event(EventBurn { token_id }.into())
+        .add_event(EventBurn { token_id })
         .add_message(burn_msg))
 }

@@ -9,10 +9,6 @@ use crate::core::{aliases::ProvQueryResponse, msg::QueryVersionResponse};
 ///
 /// * `deps` - A non mutable version of the dependencies. The API, Querier, and storage can all be accessed from it.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps)?;
-/// ```
 pub fn handle(deps: Deps) -> ProvQueryResponse {
     let res = QueryVersionResponse {
         contract_version: get_contract_version(deps.storage)?,
@@ -40,7 +36,7 @@ mod tests {
         let mut deps = mock_provenance_dependencies();
         setup::mock_contract(deps.as_mut());
         let bin = handle(deps.as_ref()).unwrap();
-        let response: QueryVersionResponse = from_json(&bin).unwrap();
+        let response: QueryVersionResponse = from_json(bin).unwrap();
         assert_eq!(CONTRACT_NAME, response.contract_version.contract);
         assert_eq!(CONTRACT_VERSION, response.contract_version.version);
     }

@@ -1,6 +1,5 @@
+use crate::core::cw721::{Approval, ApprovalResponse, Expiration};
 use cosmwasm_std::{to_json_binary, Binary, Deps, Env, StdError};
-use cw721::ApprovalResponse;
-use cw_utils::Expiration;
 
 use crate::core::error::ContractError;
 use crate::storage::nft::TOKENS;
@@ -15,8 +14,8 @@ pub fn handle(
     let token = TOKENS.load(deps.storage, &token_id)?;
 
     // token owner has absolute approval
-    if token.owner == spender {
-        let approval = cw721::Approval {
+    if token.owner.as_str() == spender {
+        let approval = Approval {
             spender: token.owner.to_string(),
             expires: Expiration::Never {},
         };
@@ -26,9 +25,9 @@ pub fn handle(
     let filtered: Vec<_> = token
         .approvals
         .into_iter()
-        .filter(|t| t.spender == spender)
+        .filter(|t| t.spender.as_str() == spender)
         .filter(|t| include_expired || !t.is_expired(&env.block))
-        .map(|a| cw721::Approval {
+        .map(|a| Approval {
             spender: a.spender.into_string(),
             expires: a.expires,
         })

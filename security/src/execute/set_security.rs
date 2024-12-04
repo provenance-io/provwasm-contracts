@@ -20,11 +20,6 @@ use crate::{
 /// * `asset_addr` - The address of the asset to set the security for.
 /// * `security` - The security to link to the asset.
 ///
-/// # Examples
-/// ```
-/// let msg = ExecuteMsg::SetSecurity {asset_addr: Addr::unchecked("addr"), security: Security::new("tag")};
-/// let res = handle(deps, env, info.sender, msg.asset_addr, &msg.security)?;
-/// ```
 pub fn handle(
     mut deps: DepsMut,
     sender: Addr,
@@ -39,7 +34,7 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::SetSecurity {})
-        .add_event(SetSecurityEvent::new(&asset_addr, security).into()))
+        .add_event(SetSecurityEvent::new(&asset_addr, security)))
 }
 
 pub fn set_security(
@@ -82,7 +77,7 @@ fn is_scope(deps: &DepsMut, asset_addr: &Addr) -> Result<bool, ContractError> {
 mod tests {
     use cosmwasm_std::{Addr, Attribute, Event};
     use provwasm_mocks::mock_provenance_dependencies;
-
+    use provwasm_std::types::provenance::metadata::v1::{ScopeRequest, ScopeResponse};
     use crate::{
         core::{error::ContractError, msg::Security},
         events::set_security::SetSecurityEvent,
@@ -156,8 +151,15 @@ mod tests {
         let sender = Addr::unchecked(OWNER);
         let asset_addr = Addr::unchecked("invalid");
         let security: Security = Security::new("");
-        setup::mock_scopes(&mut deps);
-        setup::mock_markers(&mut deps);
+        ScopeRequest::mock_response(
+            &mut deps.querier,
+            ScopeResponse {
+                scope: None,
+                sessions: vec![],
+                records: vec![],
+                request: None,
+            },
+        );
 
         setup::mock_contract(deps.as_mut());
 

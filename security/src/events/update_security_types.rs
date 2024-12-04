@@ -12,6 +12,8 @@ impl UpdateSecurityTypesEvent {
     ///
     /// # Examples
     /// ```
+    /// use security::events::update_security_types::UpdateSecurityTypesEvent;
+    /// 
     /// let event = UpdateSecurityTypesEvent::new();
     /// ```
     pub fn new() -> Self {
@@ -33,6 +35,8 @@ impl Default for UpdateSecurityTypesEvent {
     ///
     /// # Examples
     /// ```
+    /// use security::events::update_security_types::UpdateSecurityTypesEvent;
+    /// 
     /// let event = UpdateSecurityTypesEvent::default();
     /// ```
     fn default() -> Self {

@@ -19,10 +19,6 @@ use crate::{
 /// * `sender` - The address of the message signer.
 /// * `security_types` - The security types to be removed.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, env, info.sender, msg.security_types)?;
-/// ```
 pub fn handle(deps: DepsMut, sender: Addr, security_types: &[Security]) -> ProvTxResponse {
     if !storage::state::is_owner(deps.storage, &sender)? {
         return Err(ContractError::Unauthorized {});
@@ -38,7 +34,7 @@ pub fn handle(deps: DepsMut, sender: Addr, security_types: &[Security]) -> ProvT
 
     Ok(Response::default()
         .set_action(ActionType::RemoveSecurityTypes {})
-        .add_event(UpdateSecurityTypesEvent::new().into()))
+        .add_event(UpdateSecurityTypesEvent::new()))
 }
 
 #[cfg(test)]
@@ -107,9 +103,9 @@ mod tests {
             handle(deps.as_mut(), sender, &security_types).expect("should not return an error");
 
         let found = storage::security::has_type(&deps.storage, &Security::new(TAG1));
-        assert_eq!(false, found);
+        assert!(!found);
         let found = storage::security::has_type(&deps.storage, &Security::new(TAG2));
-        assert_eq!(true, found);
+        assert!(found);
         assert_eq!(expected_attributes, res.attributes);
         assert_eq!(expected_events, res.events);
     }
@@ -128,7 +124,7 @@ mod tests {
 
         for security in &security_types {
             let found = storage::security::has_type(&deps.storage, security);
-            assert_eq!(false, found);
+            assert!(!found);
         }
         assert_eq!(expected_attributes, res.attributes);
         assert_eq!(expected_events, res.events);

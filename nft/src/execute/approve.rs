@@ -1,10 +1,9 @@
-use cosmwasm_std::{Addr, DepsMut, Env, MessageInfo, Response};
-use cw_utils::Expiration;
-
+use crate::core::cw721::Expiration;
 use crate::core::error::ContractError;
 use crate::events::approve::EventApprove;
 use crate::util::action::{Action, ActionType};
 use crate::util::permission;
+use cosmwasm_std::{Addr, DepsMut, Env, MessageInfo, Response};
 
 pub fn handle(
     deps: DepsMut,
@@ -18,5 +17,5 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::Approve)
-        .add_event(EventApprove { spender, token_id }.into()))
+        .add_event(EventApprove { spender, token_id }))
 }

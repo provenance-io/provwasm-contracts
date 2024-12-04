@@ -16,11 +16,6 @@ use crate::{
 /// * `security` - The security to lookup addresses by.
 /// * `paginate` - A struct containing additional optional args for pagination.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, &Security::new("tag1"), Paginate{limit: None, start_after: None})?;
-/// ```
-
 pub fn handle(
     deps: Deps,
     category: &str,
@@ -58,7 +53,7 @@ mod tests {
         let bin = handle(deps.as_ref(), "tag3", paginate).expect("should not return an error");
 
         let response: QuerySecurityCategoryResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.assets);
     }
 
@@ -78,7 +73,7 @@ mod tests {
         let bin = handle(deps.as_ref(), TAG1, paginate).expect("should not return an error");
 
         let response: QuerySecurityCategoryResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.assets);
     }
 
@@ -104,7 +99,7 @@ mod tests {
         let bin = handle(deps.as_ref(), TAG1, paginate).expect("should not return an error");
 
         let response: QuerySecurityCategoryResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.assets);
     }
 
@@ -127,7 +122,7 @@ mod tests {
         let bin = handle(deps.as_ref(), TAG1, paginate).expect("should not return an error");
 
         let response: QuerySecurityCategoryResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.assets);
     }
 }

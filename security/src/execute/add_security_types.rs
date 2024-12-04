@@ -18,10 +18,6 @@ use crate::{
 /// * `sender` - The address of the message signer.
 /// * `security_types` - The security types to be added.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, env, info.sender, msg.securities)?;
-/// ```
 pub fn handle(deps: DepsMut, sender: Addr, security_types: &[Security]) -> ProvTxResponse {
     if !storage::state::is_owner(deps.storage, &sender)? {
         return Err(ContractError::Unauthorized {});
@@ -33,7 +29,7 @@ pub fn handle(deps: DepsMut, sender: Addr, security_types: &[Security]) -> ProvT
 
     Ok(Response::default()
         .set_action(ActionType::AddSecurityTypes {})
-        .add_event(UpdateSecurityTypesEvent::new().into()))
+        .add_event(UpdateSecurityTypesEvent::new()))
 }
 
 #[cfg(test)]
@@ -82,7 +78,7 @@ mod tests {
         let res = handle(deps.as_mut(), sender, &security_types).expect("should return an error");
         let found = storage::security::has_type(&deps.storage, &Security::new("newtag"));
 
-        assert_eq!(true, found);
+        assert!(found);
         assert_eq!(expected_events, res.events);
         assert_eq!(expected_attributes, res.attributes);
     }
@@ -104,7 +100,7 @@ mod tests {
 
         for security in &security_types {
             let found = storage::security::has_type(&deps.storage, security);
-            assert_eq!(true, found);
+            assert!(found);
         }
         assert_eq!(expected_events, res.events);
         assert_eq!(expected_attributes, res.attributes);

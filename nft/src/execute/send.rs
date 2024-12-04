@@ -1,5 +1,6 @@
+use crate::core::cw721::Cw721ReceiveMsg;
 use cosmwasm_std::{Addr, Binary, DepsMut, Env, MessageInfo, Response};
-use cw721::Cw721ReceiveMsg;
+use provwasm_std::metadata_address::MetadataAddress;
 use provwasm_std::types::provenance::metadata::v1::process::ProcessId;
 use provwasm_std::types::provenance::metadata::v1::record_input::Source;
 use provwasm_std::types::provenance::metadata::v1::{
@@ -14,7 +15,6 @@ use crate::events::send::EventSend;
 use crate::storage;
 use crate::storage::nft::TOKENS;
 use crate::util::action::{Action, ActionType};
-use crate::util::metadata_address::MetadataAddress;
 use crate::util::{parse_uuid, permission};
 
 pub fn handle(
@@ -34,18 +34,14 @@ pub fn handle(
     let contract_spec_uuid = parse_uuid(&state.contract_spec_uuid)?;
 
     let update_scope_value_owner_msg = MsgUpdateValueOwnersRequest {
-        scope_ids: vec![MetadataAddress::scope(token_id).unwrap().bytes],
+        scope_ids: vec![MetadataAddress::scope(token_id)?.bytes],
         value_owner_address: contract.to_string(),
         signers: vec![env.contract.address.to_string(), info.sender.to_string()],
     };
 
     let session = Session {
-        session_id: MetadataAddress::session(token_id, session_uuid)
-            .unwrap()
-            .bytes,
-        specification_id: MetadataAddress::contract_specification(contract_spec_uuid)
-            .unwrap()
-            .bytes,
+        session_id: MetadataAddress::session(token_id, session_uuid)?.bytes,
+        specification_id: MetadataAddress::contract_specification(contract_spec_uuid)?.bytes,
         parties: vec![Party {
             address: env.contract.address.to_string(),
             role: PartyType::Provenance.into(),
@@ -117,7 +113,7 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::Send)
-        .add_event(EventSend { contract, token_id }.into())
+        .add_event(EventSend { contract, token_id })
         .add_message(update_scope_value_owner_msg)
         .add_message(write_session_msg)
         .add_message(write_record_msg)

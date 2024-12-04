@@ -18,11 +18,6 @@ use crate::{
 /// * `sender` - The address of the message signer.
 /// * `asset_addr` - The address of the asset to remove the security from.
 ///
-/// # Examples
-/// ```
-/// let msg = ExecuteMsg::RemoveSecurity {asset_addr: Addr::unchecked("addr")};
-/// let res = handle(deps, env, info.sender, msg.asset_addr)?;
-/// ```
 pub fn handle(deps: DepsMut, sender: Addr, asset_addr: Addr) -> ProvTxResponse {
     if !storage::state::is_owner(deps.storage, &sender)? {
         return Err(ContractError::Unauthorized {});
@@ -33,7 +28,7 @@ pub fn handle(deps: DepsMut, sender: Addr, asset_addr: Addr) -> ProvTxResponse {
 
     Ok(Response::default()
         .set_action(ActionType::RemoveSecurity {})
-        .add_event(RemoveSecurityEvent::new(&asset_addr, &security).into()))
+        .add_event(RemoveSecurityEvent::new(&asset_addr, &security)))
 }
 
 #[cfg(test)]
@@ -85,7 +80,7 @@ mod tests {
             handle(deps.as_mut(), sender, asset_addr.clone()).expect("should not return an error");
         let found = storage::asset::has_security(&deps.storage, &Security::new(TAG1));
 
-        assert_eq!(false, found);
+        assert!(!found);
         assert_eq!(
             vec![Attribute::from(ActionType::RemoveSecurity {})],
             res.attributes
@@ -105,6 +100,6 @@ mod tests {
         handle(deps.as_mut(), sender, asset_addr.clone()).expect_err("should return an error");
 
         let found = storage::asset::has_security(&deps.storage, &Security::new(TAG1));
-        assert_eq!(false, found);
+        assert!(!found);
     }
 }

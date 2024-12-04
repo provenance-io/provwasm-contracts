@@ -15,8 +15,14 @@ impl Validate for ExecuteMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::ExecuteMsg;
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
     /// let msg = ExecuteMsg::ChangeOwner {new_owner: Addr::unchecked("new_owner")};
-    /// msg.validate(deps)?;
+    /// let result = msg.validate(deps.as_ref());
     /// ```
     fn validate(&self, _deps: Deps) -> ValidateResult {
         match self {
@@ -57,8 +63,16 @@ impl Validate for ExecuteMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::ExecuteMsg;
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
     /// let msg = ExecuteMsg::ChangeOwner {new_owner: Addr::unchecked("new_owner")};
-    /// msg.validate_funds(deps, &info.funds)?;
+    /// let result = msg.validate_funds(&info.funds);
     /// ```
     fn validate_funds(&self, funds: &[Coin]) -> ValidateResult {
         if !funds.is_empty() {
@@ -100,8 +114,8 @@ mod tests {
         ];
 
         for msg in msgs {
-            let res = msg.validate(deps.as_ref()).unwrap();
-            assert_eq!((), res);
+            let res = msg.validate(deps.as_ref());
+            assert!(res.is_ok());
         }
     }
 
@@ -122,7 +136,7 @@ mod tests {
     #[test]
     fn test_validate_checks_for_missing_assets_in_set_multiple() {
         let deps = mock_provenance_dependencies();
-        let msgs: Vec<ExecuteMsg> = vec![mock_set_security_multiple_msg(&vec![])];
+        let msgs: Vec<ExecuteMsg> = vec![mock_set_security_multiple_msg(&[])];
 
         for msg in msgs {
             let res = msg.validate(deps.as_ref()).unwrap_err();
@@ -158,7 +172,7 @@ mod tests {
             mock_change_owner_msg(),
             mock_set_tag_msg(&Addr::unchecked("test")),
             mock_remove_tag_msg(&Addr::unchecked("test")),
-            mock_set_security_multiple_msg(&vec![Addr::unchecked("test")]),
+            mock_set_security_multiple_msg(&[Addr::unchecked("test")]),
         ];
 
         let funds = vec![Coin::new(TEST_AMOUNT, TEST_DENOM)];
@@ -179,13 +193,13 @@ mod tests {
             mock_change_owner_msg(),
             mock_set_tag_msg(&Addr::unchecked("test")),
             mock_remove_tag_msg(&Addr::unchecked("test")),
-            mock_set_security_multiple_msg(&vec![Addr::unchecked("test")]),
+            mock_set_security_multiple_msg(&[Addr::unchecked("test")]),
         ];
 
         let funds = vec![];
         for msg in msgs {
-            let res = msg.validate_funds(&funds).unwrap();
-            assert_eq!((), res);
+            let res = msg.validate_funds(&funds);
+            assert!(res.is_ok());
         }
     }
 }

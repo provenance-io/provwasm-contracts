@@ -1,4 +1,5 @@
 use cosmwasm_std::{Addr, DepsMut, Env, MessageInfo, Response};
+use provwasm_std::metadata_address::MetadataAddress;
 use provwasm_std::types::provenance::metadata::v1::process::ProcessId;
 use provwasm_std::types::provenance::metadata::v1::record_input::Source;
 use provwasm_std::types::provenance::metadata::v1::{
@@ -13,7 +14,6 @@ use uuid::Uuid;
 use crate::events::mint::EventMint;
 use crate::storage::nft::{Nft, TOKENS};
 use crate::storage::nft_count;
-use crate::util::metadata_address::MetadataAddress;
 use crate::util::parse_uuid;
 use crate::{
     core::error::ContractError,
@@ -36,9 +36,7 @@ pub fn handle(
 
     let scope = Scope {
         scope_id: vec![],
-        specification_id: MetadataAddress::scope_specification(scope_spec_uuid)
-            .unwrap()
-            .bytes,
+        specification_id: MetadataAddress::scope_specification(scope_spec_uuid)?.bytes,
         owners: vec![Party {
             address: env.contract.address.to_string(),
             role: PartyType::Provenance.into(),
@@ -58,12 +56,8 @@ pub fn handle(
     };
 
     let session = Session {
-        session_id: MetadataAddress::session(token_id, session_uuid)
-            .unwrap()
-            .bytes,
-        specification_id: MetadataAddress::contract_specification(contract_spec_uuid)
-            .unwrap()
-            .bytes,
+        session_id: MetadataAddress::session(token_id, session_uuid)?.bytes,
+        specification_id: MetadataAddress::contract_specification(contract_spec_uuid)?.bytes,
         parties: vec![Party {
             address: env.contract.address.to_string(),
             role: PartyType::Provenance.into(),
@@ -162,13 +156,10 @@ pub fn handle(
 
     Ok(Response::default()
         .set_action(ActionType::Mint)
-        .add_event(
-            EventMint {
-                recipient,
-                token_id,
-            }
-            .into(),
-        )
+        .add_event(EventMint {
+            recipient,
+            token_id,
+        })
         .add_message(write_scope_msg)
         .add_message(write_session_msg)
         .add_message(write_record_spec_msg)

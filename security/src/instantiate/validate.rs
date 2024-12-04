@@ -15,8 +15,16 @@ impl Validate for InstantiateMsg {
     ///
     /// # Examples
     /// ```
-    /// let msg = InstantiateMsg::Default {owner: Addr::unchecked("owner"), tag_types: vec!["tag1".to_string()]};
-    /// msg.validate(deps)?;
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{InstantiateMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
+    /// let msg = InstantiateMsg::Default {owner: Addr::unchecked("owner"),security_types: vec![]};
+    /// let result = msg.validate(deps.as_ref());
     /// ```
     fn validate(&self, _deps: Deps) -> ValidateResult {
         // TODO Check length of tag_types
@@ -33,8 +41,16 @@ impl Validate for InstantiateMsg {
     ///
     /// # Examples
     /// ```
-    /// let msg = InstantiateMsg::Default {owner: Addr::unchecked("owner"), tag_types: vec!["tag1".to_string()]};
-    /// msg.validate_funds(deps, &info.funds)?;
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{InstantiateMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
+    /// let msg = InstantiateMsg::Default {owner: Addr::unchecked("owner"),security_types: vec![]};
+    /// let result = msg.validate_funds(&info.funds);
     /// ```
     fn validate_funds(&self, funds: &[Coin]) -> ValidateResult {
         if !funds.is_empty() {
@@ -62,7 +78,7 @@ mod tests {
     fn test_validate_funds_has_no_funds() {
         let funds = vec![];
         let message = mock_instantiate_msg();
-        assert_eq!((), message.validate_funds(&funds).unwrap());
+        assert!(message.validate_funds(&funds).is_ok());
     }
 
     #[test]
@@ -80,7 +96,7 @@ mod tests {
     fn test_validate_succeeds() {
         let deps = mock_provenance_dependencies();
         let message = mock_instantiate_msg();
-        let response = message.validate(deps.as_ref()).unwrap();
-        assert_eq!((), response);
+        let response = message.validate(deps.as_ref());
+        assert!(response.is_ok());
     }
 }

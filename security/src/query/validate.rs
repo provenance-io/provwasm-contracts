@@ -15,8 +15,16 @@ impl Validate for QueryMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{QueryMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
     /// let msg = QueryMsg::QueryVersion {};
-    /// msg.validate(deps)?;
+    /// let result = msg.validate(deps.as_ref());
     /// ```
     fn validate(&self, _deps: Deps) -> ValidateResult {
         Ok(())
@@ -31,8 +39,16 @@ impl Validate for QueryMsg {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use cosmwasm_std::testing::message_info;
+    /// use provwasm_mocks::mock_provenance_dependencies;
+    /// use security::core::msg::{QueryMsg};
+    /// use security::util::validate::Validate;
+    ///
+    /// let deps = mock_provenance_dependencies();
+    /// let info = message_info(&Addr::unchecked("sender"), &[]);
     /// let msg = QueryMsg::QueryVersion {};
-    /// msg.validate_funds(deps, &info.funds)?;
+    /// let result = msg.validate_funds(&info.funds);
     /// ```
     fn validate_funds(&self, _funds: &[Coin]) -> ValidateResult {
         Ok(())
@@ -49,21 +65,21 @@ mod tests {
     fn test_query_owner_validate_succeeds() {
         let query = QueryMsg::QueryOwner {};
         let deps = mock_provenance_dependencies();
-        assert_eq!((), query.validate(deps.as_ref()).unwrap());
+        assert!(query.validate(deps.as_ref()).is_ok());
     }
 
     #[test]
     fn test_query_version_validate_succeeds() {
         let query = QueryMsg::QueryVersion {};
         let deps = mock_provenance_dependencies();
-        assert_eq!((), query.validate(deps.as_ref()).unwrap())
+        assert!(query.validate(deps.as_ref()).is_ok());
     }
 
     #[test]
     fn test_query_funds_should_always_return_true() {
         let query1 = QueryMsg::QueryVersion {};
         let query2 = QueryMsg::QueryOwner {};
-        assert_eq!((), query1.validate_funds(&[]).unwrap());
-        assert_eq!((), query2.validate_funds(&[]).unwrap());
+        assert!(query1.validate_funds(&[]).is_ok());
+        assert!(query2.validate_funds(&[]).is_ok());
     }
 }

@@ -12,11 +12,6 @@ use crate::{
 /// * `deps` - A non mutable version of the dependencies. The API, Querier, and storage can all be accessed from it.
 /// * `asset_addr` - The address to query the security for.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, addr)?;
-/// ```
-
 pub fn handle(deps: Deps, asset_addr: Addr) -> ProvQueryResponse {
     let security = storage::asset::get_security(deps.storage, &asset_addr)?;
     let res = QueryAddressResponse { security };
@@ -48,7 +43,7 @@ mod tests {
 
         assert!(matches!(
             err,
-            ContractError::Std(StdError::NotFound { kind: _ })
+            ContractError::Std(StdError::NotFound { kind: _, .. })
         ));
     }
 
@@ -64,7 +59,7 @@ mod tests {
         let bin = handle(deps.as_ref(), asset_addr).expect("should not return an error");
 
         let response: QueryAddressResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(security, response.security);
     }
 }

@@ -18,6 +18,9 @@ impl ChangeOwnerEvent {
     ///
     /// # Examples
     /// ```
+    /// use cosmwasm_std::Addr;
+    /// use security::events::change_owner::ChangeOwnerEvent;
+    /// 
     /// let previous_owner = Addr::unchecked("previous");
     /// let new_owner = Addr::unchecked("new");
     /// let event = ChangeOwnerEvent::new(previous_owner, new_owner);

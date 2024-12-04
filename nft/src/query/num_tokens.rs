@@ -1,5 +1,5 @@
+use crate::core::cw721::NumTokensResponse;
 use cosmwasm_std::{to_json_binary, Binary, Deps};
-use cw721::NumTokensResponse;
 
 use crate::core::error::ContractError;
 use crate::storage::nft_count::nft_count;

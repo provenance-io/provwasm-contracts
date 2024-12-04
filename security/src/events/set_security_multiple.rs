@@ -23,7 +23,11 @@ impl SetSecurityMultipleEvent {
     ///
     /// # Examples
     /// ```
-    /// let event = SetSecurityMultipleEvent::new(5, &Security::new("tag1"));
+    /// use cosmwasm_std::Uint64;
+    /// use security::core::msg::Security;
+    /// use security::events::set_security_multiple::SetSecurityMultipleEvent;
+    ///
+    /// let event = SetSecurityMultipleEvent::new(Uint64::new(5), &Security::new("tag1"));
     /// ```
     pub fn new(num_assets: Uint64, security: &Security) -> Self {
         Self {

@@ -1,9 +1,8 @@
+use crate::core::cw721::Expiration;
 use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{Addr, Binary};
 use cw2::ContractVersion;
 use cw_ownable::{cw_ownable_execute, cw_ownable_query};
-use cw_utils::Expiration;
-use provwasm_std::types::provenance::metadata::v1::ScopeResponse;
 
 #[cw_serde]
 pub enum InstantiateMsg {
@@ -103,7 +102,7 @@ pub enum ExecuteMsg {
 #[derive(QueryResponses)]
 pub enum QueryMsg {
     /// Returns the operator approval details for a given token
-    #[returns(cw721::ApprovalResponse)]
+    #[returns(crate::core::cw721::ApprovalResponse)]
     Approval {
         /// Token ID in UUID format (Scope UUID)
         token_id: String,
@@ -113,7 +112,7 @@ pub enum QueryMsg {
         include_expired: Option<bool>,
     },
     /// Returns all operator approvals details for a given token
-    #[returns(cw721::ApprovalsResponse)]
+    #[returns(crate::core::cw721::ApprovalsResponse)]
     Approvals {
         /// Token ID in UUID format (Scope UUID)
         token_id: String,
@@ -123,7 +122,7 @@ pub enum QueryMsg {
 
     /// MetaData Extension
     /// Returns metadata about the contract
-    #[returns(cw721::ContractInfoResponse)]
+    #[returns(crate::core::cw721::ContractInfoResponse)]
     ContractInfo {},
 
     /// MetaData Extension
@@ -136,7 +135,7 @@ pub enum QueryMsg {
     Minter {},
 
     /// Returns the owner of the given token, error if token does not exist
-    #[returns(cw721::OwnerOfResponse)]
+    #[returns(crate::core::cw721::OwnerOfResponse)]
     OwnerOf {
         /// Token ID in UUID format (Scope UUID)
         token_id: String,
@@ -145,7 +144,7 @@ pub enum QueryMsg {
     },
 
     /// Returns the operator approval details for all tokens of a given owner or an error if not set
-    #[returns(cw721::OperatorResponse)]
+    #[returns(crate::core::cw721::OperatorResponse)]
     Operator {
         /// Owner of the NFT
         owner: String,
@@ -155,7 +154,7 @@ pub enum QueryMsg {
         include_expired: Option<bool>,
     },
     /// Returns all operator approvals details for all tokens of a given owner
-    #[returns(cw721::OperatorsResponse)]
+    #[returns(crate::core::cw721::OperatorsResponse)]
     AllOperators {
         /// Owner of the NFT
         owner: String,
@@ -167,18 +166,18 @@ pub enum QueryMsg {
         limit: Option<u32>,
     },
     /// Total number of tokens issued
-    #[returns(cw721::NumTokensResponse)]
+    #[returns(crate::core::cw721::NumTokensResponse)]
     NumTokens {},
 
     /// MetaData Extension
     /// Returns metadata about one particular token, based on *ERC721 Metadata JSON Schema*
     /// but directly from the contract
-    #[returns(cw721::NftInfoResponse<ScopeResponse>)]
+    #[returns(crate::core::cw721::NftInfoResponse<NftData>)]
     NftInfo { token_id: String },
     /// MetaData Extension
     /// Returns the result of both `NftInfo` and `OwnerOf` as one query as an optimization
     /// for clients
-    #[returns(cw721::AllNftInfoResponse<ScopeResponse>)]
+    #[returns(crate::core::cw721::AllNftInfoResponse<NftData>)]
     AllNftInfo {
         /// Token ID in UUID format (Scope UUID)
         token_id: String,
@@ -188,7 +187,7 @@ pub enum QueryMsg {
 
     /// Enumerable extension
     /// Returns all tokens owned by the given address, [] if unset.
-    #[returns(cw721::TokensResponse)]
+    #[returns(crate::core::cw721::TokensResponse)]
     Tokens {
         /// Owner of the NFT
         owner: String,
@@ -199,7 +198,7 @@ pub enum QueryMsg {
     },
     /// Enumerable extension
     /// Requires pagination. Lists all token_ids controlled by the contract.
-    #[returns(cw721::TokensResponse)]
+    #[returns(crate::core::cw721::TokensResponse)]
     AllTokens {
         /// The token id to index from
         start_after: Option<String>,
@@ -217,7 +216,14 @@ pub struct MinterResponse {
 pub struct NftData {
     pub id: String,
     pub owner: Addr,
-    pub data: ScopeResponse,
+    pub data: Option<Scope>,
+}
+
+#[cw_serde]
+pub struct Scope {
+    pub scope_id: Vec<u8>,
+    pub specification_id: Vec<u8>,
+    pub value_owner_address: String,
 }
 
 #[cw_serde]

@@ -1,5 +1,5 @@
+use crate::core::cw721::OperatorsResponse;
 use cosmwasm_std::{to_json_binary, Binary, Deps, Env, Order, StdResult};
-use cw721::OperatorsResponse;
 use cw_storage_plus::Bound;
 use cw_utils::maybe_addr;
 

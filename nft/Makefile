@@ -39,10 +39,10 @@ optimize:
 	else \
 		image="cosmwasm/optimizer"; \
 	fi; \
-	docker run --rm -v $(CURDIR)/../../:/code:Z --workdir /code/contracts/nft \
+	docker run --rm -v $(CURDIR)/../:/code:Z --workdir /code/nft \
 		--mount type=volume,source=nft_cache,target=/code/target \
 		--mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-		$$image:0.15.0
+		$$image:0.16.0
 
 .PHONY: install
 install:

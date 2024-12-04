@@ -15,11 +15,6 @@ use crate::{
 /// * `deps` - A non mutable version of the dependencies. The API, Querier, and storage can all be accessed from it.
 /// * `paginate` - A struct containing additional optional args for pagination.
 ///
-/// # Examples
-/// ```
-/// let res = handle(deps, Paginate{limit: None, start_after: None})?;
-/// ```
-
 pub fn handle(deps: Deps, paginate: Paginate<Security>) -> ProvQueryResponse {
     let securities = storage::security::get_types(deps.storage, paginate)?;
     let res = QuerySecurityTypesResponse { securities };
@@ -54,7 +49,7 @@ mod tests {
         let bin = handle(deps.as_ref(), paginate).expect("should not return an error");
 
         let response: QuerySecurityTypesResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.securities);
     }
 
@@ -73,7 +68,7 @@ mod tests {
         let bin = handle(deps.as_ref(), paginate).expect("should not return an error");
 
         let response: QuerySecurityTypesResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.securities);
     }
 
@@ -93,7 +88,7 @@ mod tests {
         let bin = handle(deps.as_ref(), paginate).expect("should not return an error");
 
         let response: QuerySecurityTypesResponse =
-            from_json(&bin).expect("should return correct response");
+            from_json(bin).expect("should return correct response");
         assert_eq!(expected, response.securities);
     }
 }

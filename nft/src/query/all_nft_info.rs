@@ -1,8 +1,8 @@
+use crate::core::cw721::{AllNftInfoResponse, NftInfoResponse, OwnerOfResponse};
 use cosmwasm_std::{to_json_binary, Binary, Deps, Env};
-use cw721::{AllNftInfoResponse, NftInfoResponse, OwnerOfResponse};
 
 use crate::core::error::ContractError;
-use crate::core::msg::NftData;
+use crate::core::msg::{NftData, Scope};
 use crate::query::nft_info::load_scope;
 use crate::storage::nft::TOKENS;
 use crate::util::permission::humanize_approvals;
@@ -24,7 +24,17 @@ pub fn handle(
             extension: &NftData {
                 id: info.id,
                 owner: info.owner,
-                data: load_scope(token_id, deps.querier)?,
+                data: match load_scope(token_id, deps.querier)?.scope {
+                    Some(scope_wrapper) => match scope_wrapper.scope {
+                        Some(scope) => Some(Scope {
+                            scope_id: scope.scope_id,
+                            specification_id: scope.specification_id,
+                            value_owner_address: scope.value_owner_address,
+                        }),
+                        _ => None,
+                    },
+                    None => None,
+                },
             },
         },
     })?)
